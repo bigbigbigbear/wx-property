@@ -9,6 +9,9 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
+      meta: {
+        title: '首页'
+      },
       component: HelloWorld
     }
   ]

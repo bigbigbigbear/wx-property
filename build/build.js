@@ -1,13 +1,17 @@
 'use strict'
+// 检查 Node 和 npm 版本
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
 
 const ora = require('ora')
 const rm = require('rimraf')
+// 使用 NodeJS 自带的文件路径工具
 const path = require('path')
 const chalk = require('chalk')
+// 使用 webpack
 const webpack = require('webpack')
+// 获取 config/index.js 的默认配置
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 

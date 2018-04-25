@@ -1,7 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { Toast } from 'mint-ui';
-import HelloWorld from '@/components/HelloWorld'
+const Home =  () => import('@/pages/home/Home')
+const Park =  () => import('@/pages/park/Park')
+const ParkDetail =  () => import('@/pages/parkDetail/ParkDetail')
+const ParkScore =  () => import('@/pages/parkScore/ParkScore')
+const EmployeeList =  () => import('@/pages/employeeList/EmployeeList')
+const EmployeeScore =  () => import('@/pages/employeeScore/EmployeeScore')
+const FaultRepair =  () => import('@/pages/faultRepair/FaultRepair')
+const DeviceBook =  () => import('@/pages/deviceBook/DeviceBook')
+const RentList =  () => import('@/pages/rentList/RentList')
+const RentDetail =  () => import('@/pages/rentDetail/RentDetail')
+const NewsList =  () => import('@/pages/newsList/NewsList')
+const NewsDetail =  () => import('@/pages/newsDetail/NewsDetail')
+const Mine =  () => import('@/pages/mine/Mine')
+const MineBill =  () => import('@/pages/mineBill/MineBill')
+const MineScore =  () => import('@/pages/mineScore/MineScore')
+const MineAdvice =  () => import('@/pages/mineAdvice/MineAdvice')
 
 Vue.use(Router)
 
@@ -10,11 +25,153 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
+      redirect: to => {
+        return '/home'
+      }
+    },
+    {
+      path: '/home',
+      name: 'home',
       meta: {
-        title: '首页'
+        title: '首页',
+        requireLogin: true
       },
-      component: HelloWorld
+      component: Home
+    },
+    {
+      path: '/park',
+      name: 'park',
+      meta: {
+        title: '园区',
+        requireLogin: true
+      },
+      component: Park
+    },
+    {
+      path: '/parkDetail/:pid',
+      name: 'parkDetail',
+      meta: {
+        title: '园区详情',
+        requireLogin: true
+      },
+      component: Park
+    },
+    {
+      path: '/parkScore/:pid',
+      name: 'parkScore',
+      meta: {
+        title: '园区评分',
+        requireLogin: true
+      },
+      component: ParkScore
+    },
+    {
+      path: '/employeeList/:pid',
+      name: 'employeeList',
+      meta: {
+        title: '工作人员列表',
+        requireLogin: true
+      },
+      component: EmployeeList
+    },
+    {
+      path: '/employeeScore/:pid/:eid',
+      name: 'employeeScore',
+      meta: {
+        title: '工作人员评分',
+        requireLogin: true
+      },
+      component: EmployeeScore
+    },
+    {
+      path: '/faultRepair/:pid',
+      name: 'faultRepair',
+      meta: {
+        title: '故障报修',
+        requireLogin: true
+      },
+      component: FaultRepair
+    },
+    {
+      path: '/deviceBook/:pid',
+      name: 'deviceBook',
+      meta: {
+        title: '设施预约',
+        requireLogin: true
+      },
+      component: DeviceBook
+    },
+    {
+      path: '/rentList',
+      name: 'rentList',
+      meta: {
+        title: '招租列表',
+        requireLogin: true
+      },
+      component: RentList
+    },
+    {
+      path: '/rentDetail/:rid',
+      name: 'rentDetail',
+      meta: {
+        title: '招租详情',
+        requireLogin: true
+      },
+      component: RentDetail
+    },
+    {
+      path: '/newsList',
+      name: 'newsList',
+      meta: {
+        title: '新闻列表',
+        requireLogin: true
+      },
+      component: NewsList
+    },
+    {
+      path: '/newsDetail/:nid',
+      name: 'newsDetail',
+      meta: {
+        title: '新闻详情',
+        requireLogin: true
+      },
+      component: NewsDetail
+    },
+    {
+      path: '/Mine',
+      name: 'Mine',
+      meta: {
+        title: '我的',
+        requireLogin: true
+      },
+      component: Mine
+    },
+    {
+      path: '/MineBill',
+      name: 'MineBill',
+      meta: {
+        title: '我的账单',
+        requireLogin: true
+      },
+      component: MineBill
+    },
+    {
+      path: '/MineScore',
+      name: 'MineScore',
+      meta: {
+        title: '我的评分',
+        requireLogin: true
+      },
+      component: MineScore
+    },
+    {
+      path: '/MineAdvice',
+      name: 'MineAdvice',
+      meta: {
+        title: '投诉建议',
+        requireLogin: true
+      },
+      component: MineAdvice
     }
   ]
 })

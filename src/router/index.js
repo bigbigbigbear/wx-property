@@ -1,27 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Toast } from 'mint-ui';
-const Home =  () => import('@/pages/home/Home')
-const Park =  () => import('@/pages/park/Park')
-const ParkDetail =  () => import('@/pages/parkDetail/ParkDetail')
-const ParkScore =  () => import('@/pages/parkScore/ParkScore')
-const EmployeeList =  () => import('@/pages/employeeList/EmployeeList')
-const EmployeeScore =  () => import('@/pages/employeeScore/EmployeeScore')
-const FaultRepair =  () => import('@/pages/faultRepair/FaultRepair')
-const DeviceBook =  () => import('@/pages/deviceBook/DeviceBook')
-const RentList =  () => import('@/pages/rentList/RentList')
-const RentDetail =  () => import('@/pages/rentDetail/RentDetail')
-const NewsList =  () => import('@/pages/newsList/NewsList')
-const NewsDetail =  () => import('@/pages/newsDetail/NewsDetail')
-const Mine =  () => import('@/pages/mine/Mine')
-const MineBill =  () => import('@/pages/mineBill/MineBill')
-const MineScore =  () => import('@/pages/mineScore/MineScore')
-const MineAdvice =  () => import('@/pages/mineAdvice/MineAdvice')
+// import { Toast } from 'mint-ui'
+const Home = () => import('@/pages/home/Home')
+const Park = () => import('@/pages/park/Park')
+const About = () => import('@/pages/about/About')
+const ParkDetail = () => import('@/pages/parkDetail/ParkDetail')
+const ParkScore = () => import('@/pages/parkScore/ParkScore')
+const EmployeeList = () => import('@/pages/employeeList/EmployeeList')
+const EmployeeScore = () => import('@/pages/employeeScore/EmployeeScore')
+const FaultRepair = () => import('@/pages/faultRepair/FaultRepair')
+const DeviceBook = () => import('@/pages/deviceBook/DeviceBook')
+const RentList = () => import('@/pages/rentList/RentList')
+const RentDetail = () => import('@/pages/rentDetail/RentDetail')
+const NewsList = () => import('@/pages/newsList/NewsList')
+const NewsDetail = () => import('@/pages/newsDetail/NewsDetail')
+const Mine = () => import('@/pages/mine/Mine')
+const MineBill = () => import('@/pages/mineBill/MineBill')
+const MineScore = () => import('@/pages/mineScore/MineScore')
+const MineAdvice = () => import('@/pages/mineAdvice/MineAdvice')
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -39,6 +40,15 @@ export default new Router({
       component: Home
     },
     {
+      path: '/about',
+      name: 'about',
+      meta: {
+        title: '关于我们',
+        requireLogin: true
+      },
+      component: About
+    },
+    {
       path: '/park',
       name: 'park',
       meta: {
@@ -54,7 +64,7 @@ export default new Router({
         title: '园区详情',
         requireLogin: true
       },
-      component: Park
+      component: ParkDetail
     },
     {
       path: '/parkScore/:pid',
@@ -93,7 +103,7 @@ export default new Router({
       component: FaultRepair
     },
     {
-      path: '/deviceBook/:pid',
+      path: '/deviceBook/:pid/:did',
       name: 'deviceBook',
       meta: {
         title: '设施预约',
@@ -138,8 +148,8 @@ export default new Router({
       component: NewsDetail
     },
     {
-      path: '/Mine',
-      name: 'Mine',
+      path: '/mine',
+      name: 'mine',
       meta: {
         title: '我的',
         requireLogin: true
@@ -147,8 +157,8 @@ export default new Router({
       component: Mine
     },
     {
-      path: '/MineBill',
-      name: 'MineBill',
+      path: '/mineBill',
+      name: 'mineBill',
       meta: {
         title: '我的账单',
         requireLogin: true
@@ -156,8 +166,8 @@ export default new Router({
       component: MineBill
     },
     {
-      path: '/MineScore',
-      name: 'MineScore',
+      path: '/mineScore',
+      name: 'mineScore',
       meta: {
         title: '我的评分',
         requireLogin: true
@@ -165,8 +175,8 @@ export default new Router({
       component: MineScore
     },
     {
-      path: '/MineAdvice',
-      name: 'MineAdvice',
+      path: '/mineAdvice',
+      name: 'mineAdvice',
       meta: {
         title: '投诉建议',
         requireLogin: true
@@ -177,35 +187,32 @@ export default new Router({
 })
 
 // 路由拦截
-// 差点忘了说明,不是所有版块都需要鉴权的
-// 所以需要鉴权,我都会在路由meta添加添加一个字段requireLogin,设置为true的时候
-// 这货就必须走鉴权,像登录页这些不要,是可以直接访问的!!!
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(res => res.meta.requireLogin)) {
-    // 判断是否需要登录权限
-    if (window.localStorage.getItem("loginUserBaseInfo")) {
-      // 判断是否登录
-      let lifeTime =
-        JSON.parse(window.localStorage.getItem("loginUserBaseInfo")).lifeTime *
-        1000;
-      let nowTime = (new Date()).getTime(); // 当前时间的时间戳
-      if (nowTime < lifeTime) {
-        next();
-      } else {
-        Toast({
-          message: "登录状态信息过期,请重新登录"
-        });
-        next({
-          path: "/login"
-        });
-      }
-    } else {
-      // 没登录则跳转到登录界面
-      next({
-        path: "/login"
-      });
-    }
-  } else {
-    next();
-  }
-});
+// Router.beforeEach((to, from, next) => {
+//   if (to.matched.some(res => res.meta.requireLogin)) {
+//     // 判断是否需要登录权限
+//     if (localStorage.getItem("loginUserBaseInfo")) {
+//       // 判断是否登录
+//       let lifeTime =
+//         JSON.parse(localStorage.getItem("loginUserBaseInfo")).lifeTime *
+//         1000;
+//       let nowTime = (new Date()).getTime(); // 当前时间的时间戳
+//       if (nowTime < lifeTime) {
+//         next();
+//       } else {
+//         Toast({
+//           message: "登录状态信息过期,请重新登录"
+//         });
+//         next({
+//           path: "/login"
+//         });
+//       }
+//     } else {
+//       // 没登录则跳转到登录界面
+//       next({
+//         path: "/login"
+//       });
+//     }
+//   } else {
+//     next();
+//   }
+// });

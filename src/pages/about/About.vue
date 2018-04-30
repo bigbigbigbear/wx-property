@@ -1,18 +1,10 @@
 <template>
 	<div class="container" v-wechat-title="$route.meta.title">
-		<div class="section margin-b20">
+		<div class="section">
 			<div class="section-hd text-overflow bbottom">
 				<h3>{{companyInfo.title}}</h3>
 			</div>
 			<div class="section-hd" v-html="companyInfo.info"></div>
-		</div>
-		<div class="section section-page">
-			<div class="section-item">
-				<h3 class="text-overflow"><span class="font-grey">上一篇：</span>{{prevNews.news_title}}</h3>
-			</div>
-			<div class="section-item">
-				<h3 class="text-overflow"><span class="font-grey">下一篇：</span>{{nextNews.news_title}}</h3>
-			</div>
 		</div>
 	</div>
 </template>
@@ -21,13 +13,10 @@
 	width: 100%;
 	background-color: #fff;
 }
-.section-hd, .section-bd, .section-page{
+.section-hd, .section-bd{
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0.2667rem;
-}
-.section-item{
-	padding: 0.2667rem 0;
 }
 </style>
 <script type="text/babel">
@@ -41,16 +30,6 @@ export default {
 			companyInfo: {
 				title: '下一个前海？深圳再迎国家级重磅规划',
 				info: ''
-			},
-			prevNews: {
-				id: 1,
-				news_title: '中华人民共和国成立了',
-				news_info: ''
-			},
-			nextNews: {
-				id: 2,
-				news_title: '中华人民共和国成立了',
-				news_info: ''
 			}
 		}
 	},

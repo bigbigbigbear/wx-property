@@ -1,5 +1,6 @@
 /* 覆盖mint-ui的primary颜色，改为自己UI的主题色 */  
-$color-primary: #f6b345;  
+$color-primary: #f6b345;
+$bg-white: #fafafa; 
   
 .mint-header {  
   background-color: $color-primary;  
@@ -26,7 +27,8 @@ $color-primary: #f6b345;
   color: $color-primary;  
 }  
 .mint-tabbar > .mint-tab-item.is-selected {  
-  color: $color-primary;  
+  color: $color-primary;
+  background-color: $bg-white;
 }  
 .mint-searchbar-cancel {  
   color: $color-primary;  

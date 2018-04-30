@@ -8,7 +8,15 @@
 			</div>
 		</div>
 		<div class="section2">
-			
+			<mt-cell title="我的账单" value="" is-link :to="{name:'mineBill'}">
+				<img slot="icon" src="../../assets/images/icon-bill.png" width="24" height="24">
+			</mt-cell>
+			<mt-cell title="我的评分" :value="scoreAmount" is-link :to="{name:'mineScore'}">
+				<img slot="icon" src="../../assets/images/icon-score.png" width="24" height="24">
+			</mt-cell>
+			<mt-cell title="投诉建议" value="" is-link :to="{name:'mineAdvice'}">
+				<img slot="icon" src="../../assets/images/icon-advice.png" width="24" height="24">
+			</mt-cell>
 		</div>
     <foot-tab :selected="selected"></foot-tab>
 	</div>
@@ -38,9 +46,16 @@
 .section-bd h4{
 	padding: 0.2rem 0;
 }
+.section2 img{
+	width: 0.32rem;
+	height: 0.32rem;
+}
 </style>
 <script type="text/babel">
 import FootTab from '@/components/FootTab'
+import iconBill from '@/assets/images/icon-bill.png'
+import iconScore from '@/assets/images/icon-score.png'
+import iconAdvice from '@/assets/images/icon-advice.png'
 export default {
   components: {
     FootTab
@@ -52,7 +67,13 @@ export default {
 				user_avatar: '',
 				user_name: '我是美女',
 				user_park: '南山高新科技园'
-			}
+			},
+			icons: {
+				iconBill: iconBill,
+				iconScore: iconScore,
+				iconAdvice: iconAdvice
+			},
+			scoreAmount: 5
     };
   },
   created() {},

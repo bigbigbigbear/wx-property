@@ -104,25 +104,8 @@ h6 {
     /* font-size: 100%; */
     font-weight: 500;
 }
-q:before,
-q:after {
-    content: "";
-}
-sub,
-sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-sup {
-    top: -0.5em;
-}
-sub {
-    bottom: -0.25em;
-}
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 ins,
 a {
@@ -130,7 +113,7 @@ a {
 }
 /* 公共 */
 /* 字体设置 */
-div {
+/* div {
     font-size: 12px;
 }
 [data-dpr="2"] div {
@@ -138,7 +121,7 @@ div {
 }
 [data-dpr="3"] div {
     font-size: 36px;
-}
+} */
 .font-orange {
     color: #f6b345;
 }

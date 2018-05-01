@@ -21,11 +21,19 @@ $bg-white: #fafafa;
 .mint-switch-input:checked + .mint-switch-core {  
   border-color: $color-primary;  
   background-color: $color-primary;  
+}
+.mint-navbar .mint-tab-item {
+  border-bottom: 3px solid $bg-white;
+  background-color: $bg-white;
 }  
 .mint-navbar .mint-tab-item.is-selected {  
-  border-bottom: 3px solid $color-primary;  
-  color: $color-primary;  
-}  
+  border-color: $color-primary;  
+  color: $color-primary;
+  margin-bottom: 0; 
+}
+.mint-tabbar{
+  background-image: none;
+}
 .mint-tabbar > .mint-tab-item.is-selected {  
   color: $color-primary;
   background-color: $bg-white;

@@ -5,17 +5,20 @@ import App from './App'
 import router from './router'
 import axiosPlugin from "./server"
 //import store from './store/'
-import { Tabbar, TabItem, Cell, Picker, Popup, DatetimePicker } from 'mint-ui';
+import { Navbar, Tabbar, TabItem, Cell, Picker, Popup, DatetimePicker, TabContainer, TabContainerItem } from 'mint-ui';
 import './assets/css/my-mint.scss';   //全局修改mint-UI样式  
 
 Vue.use(require('vue-wechat-title'))
 Vue.use(axiosPlugin)
+Vue.component(Navbar.name, Navbar);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 Vue.component(Cell.name, Cell);
 Vue.component(Picker.name, Picker);
 Vue.component(Popup.name, Popup);
 Vue.component(DatetimePicker.name, DatetimePicker);
+Vue.component(TabContainer.name, TabContainer);
+Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

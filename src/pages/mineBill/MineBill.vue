@@ -14,7 +14,7 @@
 						<p>租金金额：<span class="font-orange">{{billInfo.rent_price}}元</span></p>
 					</div>
 					<div class="section-btn">
-						<span class="btn btn-large">查看账单</span>
+						<span class="btn btn-large" @click="checkBill(billInfo.id)">查看账单</span>
 					</div>
 					<div class="section-tip">
 						<p>温馨提醒：请于{{billInfo.overdue_date}}将以上总费用汇到我们公司指定账户（户名：深圳市七星级科技有限公司；开户行：中国农业银行；账号：6228 1254 1245）,延迟交款将按合同约定收取滞纳金。</p>
@@ -23,8 +23,8 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <div class="item" v-for="(item, index) in list2" :key="index">
-					<div>对<span class="font-orange">{{item.name}}</span>进行评分{{item.score}}分</div>
-					<div><span class="font-grey">{{item.time}}</span></div>
+					<div><span>{{item.time}}账单</span><br><span class="font-orange">租金：{{item.rent_price}}元</span></div>
+					<div><span class="btn btn-medium" @click="checkBill(item.id)">查看账单</span></div>
 				</div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -82,6 +82,7 @@ export default {
 		return {
 			selected: '1',
 			billInfo: {
+				id: 1,
 				start_date: '2018-08-01',
 				end_date: '2018-09-01',
 				rent_price: 10000,
@@ -90,27 +91,23 @@ export default {
 			list2: [
 				{
 					id: 1,
-					name: '蓝山行',
-					score: 8.5,
-					time: '2018-04-05'
+					rent_price: 10000,
+					time: '2018-04'
 				},
 				{
 					id: 2,
-					name: '蓝山行',
-					score: 8.5,
-					time: '2018-04-05'
+					rent_price: 10000,
+					time: '2018-04'
 				},
 				{
 					id: 3,
-					name: '蓝山行',
-					score: 8.5,
-					time: '2018-04-05'
+					rent_price: 10000,
+					time: '2018-04'
 				},
 				{
 					id: 4,
-					name: '蓝山行',
-					score: 8.5,
-					time: '2018-04-05'
+					rent_price: 10000,
+					time: '2018-04'
 				}
 			]
 		}
@@ -122,7 +119,14 @@ export default {
     
 	},
 	methods: {
-
+		checkBill: function(id){
+			this.$router.push({
+				name: 'billDetail',
+				params: {
+					bid: id
+				}
+			})
+		}
 	}
 }
 </script>

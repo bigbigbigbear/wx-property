@@ -16,6 +16,7 @@ const NewsList = () => import('@/pages/newsList/NewsList')
 const NewsDetail = () => import('@/pages/newsDetail/NewsDetail')
 const Mine = () => import('@/pages/mine/Mine')
 const MineBill = () => import('@/pages/mineBill/MineBill')
+const BillDetail = () => import('@/pages/billDetail/BillDetail')
 const MineScore = () => import('@/pages/mineScore/MineScore')
 const MineAdvice = () => import('@/pages/mineAdvice/MineAdvice')
 
@@ -164,6 +165,15 @@ export default new Router({
         requireLogin: true
       },
       component: MineBill
+    },
+    {
+      path: '/billDetail/:bid',
+      name: 'billDetail',
+      meta: {
+        title: '账单详情',
+        requireLogin: true
+      },
+      component: BillDetail
     },
     {
       path: '/mineScore',

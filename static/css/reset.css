@@ -186,3 +186,8 @@ a {
 .btn-black{
     background-color: #2d2d2d;
 }
+.btn-medium{
+    width: 2.1333rem;
+    height: 0.6667rem;
+    line-height: 0.6667rem;
+}

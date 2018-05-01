@@ -70,10 +70,8 @@ img {
     width: 100%;
     border: 0;
 }
-abbr,
-acronym {
-    border: 0;
-    font-variant: normal;
+i{
+    font-style: normal;
 }
 del {
     text-decoration: line-through;
@@ -166,6 +164,7 @@ div {
     width: 100%;
     height: 0;
     padding: 0.8rem 0;
+    background-color: #fff;
 }
 .bbottom{
     border-bottom: .5px solid #ddd;
@@ -176,6 +175,9 @@ div {
 .margin-r0{
     margin-right: 0;
 }
+.padding-b20{
+    padding-bottom: 0.2667rem;
+}
 .btn{
     display: inline-block;
     width: 48%;
@@ -184,7 +186,10 @@ div {
     margin-top: 0.2667rem;
     text-align: center;
     color: #fff;
-    background-color: #f6b345;
+    background-color: #f39801;
+}
+.btn-radius{
+    border-radius: 0.9333rem;
 }
 .btn-large{
     width: 100%;

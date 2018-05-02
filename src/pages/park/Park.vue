@@ -60,6 +60,7 @@
 </style>
 <script type="text/babel">
 import FootTab from '@/components/FootTab'
+import api from '../../server/api'
 export default {
   components: {
     FootTab
@@ -92,8 +93,15 @@ export default {
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.getParkList()
+  },
   methods: {
+    getParkList: function(){
+      this.$http.get(api.parkList,{}).then(response => {
+        console.log(response)
+      })
+    },
     goParkDetail: function(item) {
       // 去往园区详情页面
       this.$router.push({

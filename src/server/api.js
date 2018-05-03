@@ -4,7 +4,7 @@
  */
 
 export default {
-  parkList: '/park/list',              //园区列表 
+  parkList: '/park/list',              //园区列表 page,pageSize
   parkDetail: '/park/view',            //园区详情，params:park_id 
   newsList: '/news/list',              //新闻列表 
   newsDetail: '/news/view',            //新闻详情，params:news_id 

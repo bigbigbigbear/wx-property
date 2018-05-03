@@ -3,7 +3,7 @@
 		<div class="section">
 			<div class="section-hd">
 				<div class="section-hd__img">
-					<img :src="parkInfo.img_url" :alt="parkInfo.name">
+					<img :src="parkInfo.image" :alt="parkInfo.name">
 				</div>
 				<div class="section-hd__info">
 					<h3>{{parkInfo.name}} <span class="font-orange">{{parkInfo.score}}分</span></h3>
@@ -16,8 +16,7 @@
 					<h3><span>园区概况</span></h3>
 				</div>
 				<div class="section-content">
-					<div>
-						<p>{{parkInfo.desc}}</p>
+					<div v-html="parkInfo.content">
 					</div>
 					<div class="btn-content">
 						<span class="btn" @click="goParkScore"><img src="../../assets/images/icon-park-1.png" alt="园区评分"> 园区评分</span>
@@ -123,21 +122,14 @@
 }
 </style>
 <script type="text/babel">
-
+import api from '../../server/api'
 export default {
 	components: {
 		
 	},
 	data() {
 		return {
-			parkInfo: {
-				name: '南山高新科技园',
-				img_url: '',
-				score: '8.5',
-				address: '深圳龙华新区人民南路水榭春天',
-				tel: '138-2356-9423',
-				desc: 'CC展览展示文化创意园由在国内展览展示行业经营多年的文宝文化产业集团倾力打造，依托其超前的国际前瞻商业思维和丰厚的全链条行业资源，立足平湖，服务龙岗，荣耀深圳，为文化产业发展探索全新的个性化成长路径，致力于在展览展示与文化创意跨界融合领域树立行业新标杆。符合园区以及政府扶持条件的入驻企业，届时可享受政府的培训补助、人才补贴扶持；入驻园区企业合同满一年后，办公用房可以享受龙岗区的租赁补贴，按每平方米每月15元、面积最大不超过500平方米的支持标准，采用事后报销制；创意设计融合新技术的展示器材研发资金资助。'
-			},
+			parkInfo: {},
 			deviceList: [
 				{
 					device_id: 1,
@@ -155,12 +147,23 @@ export default {
 		}
 	},
 	created() {
-
+		this.getParkInfo()
 	},
 	mounted() {
     
 	},
 	methods: {
+		//获取园区详情
+		getParkInfo: function(){
+			let that = this
+			let pid = this.$route.params.pid
+      let params = {
+        park_id: pid
+      }
+      this.$http.get(api.parkDetail,{params: params}).then(res => {
+        that.parkInfo = res.data
+      })
+		},
 		//园区评分页面
 		goParkScore: function(){
 			let pid = this.$route.params.pid

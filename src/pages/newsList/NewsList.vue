@@ -4,12 +4,15 @@
       <div class="section-hd">
         <h3>新闻列表</h3>
       </div>
+      <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section4-bd">
-        <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
-          <h3 class="text-overflow">{{item.news_title}}</h3>
-          <p class="font-grey text-overflow-2"><span>{{item.news_desc}}</span></p>
-          <p><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.news_time}}</p>
-        </div>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" ref="loadmore">
+          <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
+            <h3 class="text-overflow">{{item.title}}</h3>
+            <p class="font-grey text-overflow-2"><span>{{item.intro}}</span></p>
+            <p class="font-grey"><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.created_at | formateTime}}</p>
+          </div>
+        </mt-loadmore>
       </div>
     </div>
     <div class="divider"></div>
@@ -46,42 +49,55 @@
 }
 </style>
 <script type="text/babel">
+import api from '../../server/api'
+import { formateDate } from '../../utils/utils'
 export default {
   components: {
   },
   data() {
     return {
-      newsList: [
-        {
-          news_id: 1,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 2,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 3,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 4,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        }
-      ]
+      page: 1,
+      pageSize: 8,
+      pageCount: 1,
+      totalCount: 0,
+      newsList: [],
+      allLoaded: false,
+      bottomPullText: '上拉加载更多...',
+      bottomDropText: '释放更新数据...',
+      bottomLoadingText: '正在努力加载...'
     };
   },
-  created() {},
-  mounted() {},
+  created() {
+    
+  },
+  mounted() {
+    this.getNewsList()
+  },
   methods: {
+    //获取新闻列表
+    getNewsList: function(){
+      let that = this
+      let params = {
+        page: this.page,
+        pageSize: this.pageSize
+      }
+      this.$http.get(api.newsList,{params: params}).then(res => {
+        that.pageCount = res._meta.pageCount
+        that.totalCount = res._meta.totalCount
+        that.newsList = that.newsList.concat(res.data)
+      })
+    },
+    loadBottom() {
+      let that = this
+      this.page += 1
+      if(this.page > this.pageCount){
+        this.allLoaded = true;// 若数据已全部获取完毕
+      }
+      setTimeout(() => {
+        that.getNewsList
+      }, 50);
+      this.$refs.loadmore.onBottomLoaded();
+    },
     goNewsDetail: function(item){
       // 去往招租详情页面
       this.$router.push({
@@ -90,6 +106,11 @@ export default {
           nid: item.news_id
         }
       })
+    }
+  },
+  filters: {
+    formateTime: function (value) {
+      return formateDate(value*1000, 'yyyy-MM-dd')
     }
   }
 };

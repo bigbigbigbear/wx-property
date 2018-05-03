@@ -44,18 +44,18 @@ Axios.interceptors.request.use(
 //返回状态判断(添加响应拦截器)
 Axios.interceptors.response.use(
   res => {
-    console.log('111')
-    //对响应数据做些事
-    if (res.data && !res.data.success) {
-      Toast({
-        message: error
-      });
-      return Promise.reject(res.data.error.message);
+    if(res.status === 200){
+      if(res.data.err_code === 0){
+        return res.data
+      }else{
+        Toast({
+          message: res.data.err_msg
+        })
+      }
     }
-    return res;
   },
   error => {
-    console.log(error.response)
+    // console.log(error.response)
     // 用户登录的时候会拿到一个基础信息,比如用户名,token,过期时间戳
     // 直接丢localStorage或者sessionStorage
     // if (!window.localStorage.getItem("loginUserBaseInfo")) {

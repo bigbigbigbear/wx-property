@@ -2,7 +2,7 @@
 /**
  * 参数date,fmt(格式，如'yyyy-MM-dd hh:mm')
  */
-function formatDate(date, fmt){
+function formateDate(date, fmt){
   let cDate = new Date(date)   
   var o = {     
       "M+" : cDate.getMonth()+1, //月份     
@@ -38,5 +38,5 @@ function formatDate(date, fmt){
 }
 
 export {
-  formatDate
+  formateDate
 }

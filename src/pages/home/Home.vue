@@ -24,11 +24,11 @@
       <div class="section-bd section2-bd">
         <div class="section2-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
           <div class="item-img">
-            <img :src="item.park_img_url" :alt="item.park_name" srcset="">
+            <img :src="item.image" :alt="item.name">
           </div>
           <div class="item-title text-overflow">
-            <h3>{{item.park_name}}</h3>
-            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.park_name">
+            <h3>{{item.name}}</h3>
+            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
           </div>
         </div>
       </div>
@@ -63,9 +63,9 @@
       </div>
       <div class="section-bd section4-bd">
         <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
-          <h3 class="text-overflow">{{item.news_title}}</h3>
-          <p class="font-grey text-overflow-2"><span>{{item.news_desc}}</span></p>
-          <p><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.news_time}}</p>
+          <h3 class="text-overflow">{{item.title}}</h3>
+          <p class="font-grey text-overflow-2"><span>{{item.intro}}</span></p>
+          <p class="font-grey"><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.created_at | formateTime}}</p>
         </div>
       </div>
     </div>
@@ -181,6 +181,7 @@
   width: 100%;
   padding: 0.2667rem 0;
   border-bottom: 0.0067rem solid #eee;
+  line-height: 1.8;
 }
 .item-img__time {
   width: 0.2667rem;
@@ -196,6 +197,8 @@
 </style>
 <script type="text/babel">
 import FootTab from '@/components/FootTab'
+import api from '../../server/api'
+import { formateDate } from '../../utils/utils'
 export default {
   components: {
     FootTab
@@ -209,28 +212,10 @@ export default {
         email: '13249851256@126.com',
         address: '深圳市宝安区新安街道创业二路北二巷5号七星创意工场'
       },
-      parkList: [
-        {
-          park_id: 1,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 2,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 3,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 4,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        }
-      ],
+      parkPage: 1,
+      parkSize: 4,
+      parkTotal: 0,
+      parkList: [],
       rentList: [
         {
           rent_id: 1,
@@ -265,43 +250,38 @@ export default {
           rent_price: "25元/m²"
         }
       ],
-      newsList: [
-        {
-          news_id: 1,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 2,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 3,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        },
-        {
-          news_id: 4,
-          news_title: "下一个前海？深圳再迎国家级重磅规划",
-          news_desc: "3月15日，记者从深圳市规划和国土资源委员会（市海洋局）获悉，深圳市海洋新城（大空港半岛区）将面向全球招商引资，欢迎海内外人士投资",
-          news_time: "2018-02-14"
-        }
-      ],
+      newsPage: 1,
+      newsSize: 4,
+      newsTotal: 0,
+      newsList: [],
       selected: 'home'
     };
   },
-  created() {},
-  mounted() {},
+  created() {
+    
+  },
+  mounted() {
+    this.getParkList()
+    this.getNewsList()
+  },
   methods: {
     goAboutDetail: function() {
       // 去往关于我们详情页面
       this.$router.push({
         name: "about"
       });
+    },
+    //获取园区列表
+    getParkList: function(){
+      let that = this
+      let params = {
+        page: this.parkPage,
+        pageSize: this.parkSize
+      }
+      this.$http.get(api.parkList,{params: params}).then(res => {
+        that.parkTotal = res._meta.totalCount
+        that.parkList = res.data
+      })
     },
     goParkList: function() {
       // 去往园区列表页面
@@ -333,6 +313,18 @@ export default {
         }
       })
     },
+    //获取新闻列表
+    getNewsList: function(){
+      let that = this
+      let params = {
+        page: this.newsPage,
+        pageSize: this.newsSize
+      }
+      this.$http.get(api.newsList,{params: params}).then(res => {
+        that.newsTotal = res._meta.totalCount
+        that.newsList = res.data
+      })
+    },
     goNewsList: function() {
       // 去往新闻列表页面
       this.$router.push({
@@ -347,6 +339,11 @@ export default {
           nid: item.news_id
         }
       })
+    }
+  },
+  filters: {
+    formateTime: function (value) {
+      return formateDate(value*1000, 'yyyy-MM-dd')
     }
   }
 };

@@ -102,7 +102,7 @@ h4,
 h5,
 h6 {
     /* font-size: 100%; */
-    font-weight: 500;
+    font-weight: normal;
 }
 a:hover {
     text-decoration: none;
@@ -143,11 +143,17 @@ a {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+.no-data{
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    color: #999;
+    text-align: center;
+}
 .divider {
     width: 100%;
     height: 0;
     padding: 0.7333rem 0;
-    background-color: #fff;
 }
 .bbottom{
     border-bottom: .5px solid #ddd;

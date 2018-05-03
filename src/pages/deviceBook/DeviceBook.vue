@@ -153,7 +153,7 @@ export default {
       this.$refs[picker].open();
     },
     handleChange(value) {
-			let date = formatDate(value, 'yyyy-MM-dd HH:mm')
+			let date = formateDate(value, 'yyyy-MM-dd HH:mm')
 			this.bookTime = date
     },
     handleVisibleChange(isVisible) {

@@ -1,17 +1,15 @@
 <template>
 	<div class="container" v-wechat-title="$route.meta.title">
-    <div class="section">
-      <!-- <div class="section-hd">
-        
-      </div> -->
+    <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
+    <div class="section" v-else>
       <div class="section-bd">
         <div class="section-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
           <div class="item-img">
-            <img :src="item.park_img_url" :alt="item.park_name">
+            <img :src="item.image" :alt="item.name">
           </div>
           <div class="item-title text-overflow">
-            <h3>{{item.park_name}}</h3>
-            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.park_name">
+            <h3>{{item.name}}</h3>
+            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
           </div>
         </div>
       </div>
@@ -67,29 +65,11 @@ export default {
   },
   data() {
     return {
-      parkList: [
-        {
-          park_id: 1,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 2,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 3,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        },
-        {
-          park_id: 4,
-          park_img_url: "",
-          park_name: "南山高新科技园"
-        }
-      ],
-      selected: 'park'
+      totalCount: 0,
+      page: 1,
+      pageSize: 10,
+      parkList: [],
+      selected: 'park',
     };
   },
   created() {},
@@ -97,9 +77,16 @@ export default {
     this.getParkList()
   },
   methods: {
+    // 获取园区列表
     getParkList: function(){
-      this.$http.get(api.parkList,{}).then(response => {
-        console.log(response)
+      let that = this
+      let params = {
+        page: this.page,
+        pageSize: this.pageSize
+      }
+      this.$http.get(api.parkList,{params: params}).then(res => {
+        that.totalCount = res._meta.totalCount
+        that.parkList = res.data
       })
     },
     goParkDetail: function(item) {

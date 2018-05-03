@@ -8,7 +8,7 @@ const Axios = axios.create({
   baseURL: baseUrl, // 因为我本地做了反向代理
   timeout: 7000,
   responseType: "json",
-  withCredentials: false, // 是否允许带cookie这些
+  withCredentials: false, // 是否允许带cookie这些,这个选项的作用是跨域时接收服务器response的set-cookies，当启用这个选项的时候，服务器不能设置 Access-Control-Allow-Origin 为 *，如果是nginx可以使用$http_origin，否则写成你真实请求的origin地址
   headers: {
     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
   }

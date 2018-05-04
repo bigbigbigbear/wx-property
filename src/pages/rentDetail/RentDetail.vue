@@ -1,5 +1,5 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
 		<div class="section margin-b20">
 			<div class="section-hd">
 				<h3>{{rentInfo.title}}</h3>

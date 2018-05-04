@@ -1,5 +1,5 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
 		<div class="section1">
 			<div class="section-bd">
 				<img :src="userInfo.user_avatar" :alt="userInfo.user_name">

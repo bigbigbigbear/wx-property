@@ -8,11 +8,7 @@
 
 export default {
   name: "starScore",
-  props: {
-    propScore: { // 传入的变量
-      type: Number
-    }
-  },
+  props: [ "propScore" ],
   computed: {
     //* 计算显示星星
     itemClasses () {
@@ -34,11 +30,16 @@ export default {
   },
   data() {
     return {
-      score: ''
+      score: 0
     };
   },
+  watch: {
+    propScore: function(val, oldVal){
+      this.score = val
+    }
+  },
   created(){
-    this.score = this.propScore
+    
   },
   mounted() {
     

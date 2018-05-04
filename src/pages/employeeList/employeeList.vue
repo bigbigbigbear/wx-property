@@ -1,18 +1,19 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
     <div class="section">
       <div class="section-hd">
         <h3>工作人员列表</h3>
       </div>
+      <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section3-bd">
         <div class="section3-item" v-for="(item, index) in employeeList" :key="index" @click="goEmployeeScore(item)">
           <div class="section3-item__l">
-            <img :src="item.employee_img_url" :alt="item.employee_name">
-						<div class="section3-item__name">{{item.employee_name}}</div>
+            <img :src="item.image" :alt="item.name">
+						<div class="section3-item__name">{{item.name}}</div>
           </div>
           <div class="section3-item__r">
-            <h4 class="text-overflow">职位：{{item.employee_position}}</h4>
-            <p class="font-grey"><span>职责：{{item.employee_duty}}</span></p>
+            <h4 class="text-overflow">职位：{{item.job}}</h4>
+            <p class="font-grey"><span>职责：{{item.intro}}</span></p>
           </div>
         </div>
       </div>
@@ -21,6 +22,16 @@
 	</div>
 </template>
 <style scoped>
+.container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: -100;
+}
 .section {
   width: 100%;
   background-color: #fff;
@@ -78,46 +89,57 @@
 }
 </style>
 <script type="text/babel">
+import api from '../../server/api'
 export default {
   components: {
   },
   data() {
     return {
-      employeeList: [
-        {
-          employee_id: 1,
-          employee_img_url: "",
-          employee_name: "蓝山行",
-          employee_position: "工业园区企业管理服务部经理",
-          employee_duty: "负责开发区统计、管委会和公司统计、开发区安全管理及入区企业服务；配合行政管理部门做好技改申报、科技申报、工商年检等专项管理与服务工作"
-        },
-        {
-          employee_id: 2,
-          employee_img_url: "",
-          employee_name: "蓝山行",
-          employee_position: "工业园区企业管理服务部经理",
-          employee_duty: "负责开发区统计、管委会和公司统计、开发区安全管理及入区企业服务；配合行政管理部门做好技改申报、科技申报、工商年检等专项管理与服务工作"
-        },
-        {
-          employee_id: 3,
-          employee_img_url: "",
-          employee_name: "蓝山行",
-          employee_position: "工业园区企业管理服务部经理",
-          employee_duty: "负责开发区统计、管委会和公司统计、开发区安全管理及入区企业服务；配合行政管理部门做好技改申报、科技申报、工商年检等专项管理与服务工作"
-        },
-        {
-          employee_id: 4,
-          employee_img_url: "",
-          employee_name: "蓝山行",
-          employee_position: "工业园区企业管理服务部经理",
-          employee_duty: "负责开发区统计、管委会和公司统计、开发区安全管理及入区企业服务；配合行政管理部门做好技改申报、科技申报、工商年检等专项管理与服务工作"
-        }
-      ]
+      page: 1,
+      pageSize: 5,
+      pageCount: 2,
+      totalCount: 0,
+      employeeList: [],
+      allLoaded: false,
+      bottomPullText: '上拉加载更多...',
+      bottomDropText: '释放更新数据...',
+      bottomLoadingText: '正在努力加载...'
     };
   },
-  created() {},
+  created() {
+    this.getEmployeeList()
+  },
   mounted() {},
   methods: {
+    //获取员工列表
+    getEmployeeList: function(){
+      let that = this
+      let pid = this.$route.params.pid
+      let params = {
+        park_id: pid,
+        page: this.page,
+        pageSize: this.pageSize
+      }
+      this.$http.get(api.employeeList,{params: params}).then(res => {
+        that.pageCount = res._meta.pageCount
+        that.totalCount = res._meta.totalCount
+        that.employeeList = that.employeeList.concat(res.data)
+      })
+    },
+    loadBottom() {
+      let that = this
+      setTimeout(() => {
+        that.page += 1
+        if(that.page > that.pageCount){
+          that.allLoaded = true;// 若数据已全部获取完毕
+        }
+        that.getNewsList()
+        that.$refs.loadmore.onBottomLoaded();
+      }, 50)
+    },
+    handleBottomChange: function(status){
+      //console.log(status)
+    },
     goEmployeeScore: function(item){
 			let pid = this.$route.params.pid
       // 工作人员评分页面

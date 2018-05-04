@@ -1,5 +1,5 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
 		<div class="section">
 			<div class="section-hd">
 				<div class="section-hd__img">

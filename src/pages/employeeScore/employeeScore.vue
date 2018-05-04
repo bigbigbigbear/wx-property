@@ -1,29 +1,29 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
 		<div class="section margin-b20">
 			<div class="section-hd">
-				<h3><i class="font-orange">{{employeeInfo.employee_name}}</i>简介</h3>
+				<h3><i class="font-orange">{{employeeInfo.name}}</i>简介</h3>
 			</div>
 			<div class="section-bd">
 				<div class="img-container">
-					<img :src="employeeInfo.employee_img_url" :alt="employeeInfo.employee_name">
+					<img :src="employeeInfo.image" :alt="employeeInfo.name">
 				</div>
 				<div class="padding-b20">
-					<p><span class="font-grey">职位介绍：</span>{{employeeInfo.employee_duty}}</p>
+					<p><span class="font-grey">职位介绍：</span>{{employeeInfo.intro}}</p>
 				</div>
 				<div class="padding-b20">
-					<p><span class="font-grey">联系方式：</span>{{employeeInfo.employee_phone}}</p>
+					<p><span class="font-grey">联系方式：</span>{{employeeInfo.contact}}</p>
 				</div>
 			</div>
 		</div>
 		<div class="section">
 			<div class="section-hd">
-				<h3>给<i class="font-orange">{{employeeInfo.employee_name}}</i>评分</h3>
-				<span class="font-orange">目前平均得分：{{employeeInfo.employee_score}}分</span>
+				<h3>给<i class="font-orange">{{employeeInfo.name}}</i>评分</h3>
+				<span class="font-orange">目前平均得分：{{employeeInfo.score}}分</span>
 			</div>
 			<div class="section-bd">
 				<div class="item">
-					<star-score class="star" :prop-score="employeeInfo.employee_score" @getScore="getEmployeeScore"></star-score>
+					<star-score class="star" :prop-score="scored" @getScore="getEmployeeScore"></star-score>
 					<div class="star-info"><span>{{starInfo}}</span></div>
 				</div>
 				<div class="item">
@@ -108,28 +108,22 @@
 </style>
 <script type="text/babel">
 import StarScore from '@/components/StarScore'
+import api from '../../server/api'
 export default {
   components: {
 		StarScore
 	},
   data() {
     return {
-			employeeInfo: {
-				employee_id: 1,
-				employee_name: '蓝山行',
-				employee_img_url: '蓝山行',
-				employee_position: '工业园区企业管理服务部经理',
-				employee_duty: '负责开发区统计、管委会和公司统计、开发区安全管理及入区企业服务；配合行政管理部门做好技改申报、科技申报、工商年检等专项管理与服务工作',
-				employee_phone: '13411251478',
-				employee_score: 8.5,
-			},
-			employeeScore: '',
+			employeeInfo: {},
+			scored: 0,
+			newScore: 0,
 			evaluate: ''
     };
   },
   computed: {
     starInfo(){
-			let rate = Math.floor(this.employeeScore / 2)
+			let rate = Math.floor(this.newScore / 2)
 			switch(rate){
 				case 2:
 					return '及格'
@@ -149,19 +143,35 @@ export default {
 			}
 		}
   },
-  created() {},
+  created() {
+		this.getEmployeeInfo()
+	},
   mounted() {
-		this.employeeScore = this.employeeInfo.employee_score
+		
 	},
   methods: {
+		//获取员工详情
+		getEmployeeInfo: function(){
+			let that = this
+			let pid = this.$route.params.pid
+			let eid = this.$route.params.eid
+      let params = {
+				park_id: pid,
+				employee_id: eid,
+				user_id: 1
+      }
+      this.$http.get(api.employeeDetail,{params: params}).then(res => {
+				that.employeeInfo = res.data.detail
+				that.scored = res.data.scored
+      })
+		},
 		// 提交评分
 		submitScore: function(){
-
+			console.log(this.scored)
 		},
-		// 获取评分
-		getEmployeeScore: function(data){
-			// console.log(data)
-			this.employeeScore = data
+		//获取评分
+		getEmployeeScore: function(val){
+			this.newScore = val
 		}
 	}
 };

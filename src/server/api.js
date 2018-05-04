@@ -8,4 +8,6 @@ export default {
   parkDetail: '/park/view',            //园区详情，params:park_id 
   newsList: '/news/list',              //新闻列表 
   newsDetail: '/news/view',            //新闻详情，params:news_id 
+  employeeList: '/employee/list',      //员工列表 params:park_id 
+  employeeDetail: '/employee/view',     //员工详情，params:employee_id ,park_id, user_id
 }

@@ -1,17 +1,19 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
     <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
     <div class="section" v-else>
       <div class="section-bd">
-        <div class="section-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
-          <div class="item-img">
-            <img :src="item.image" :alt="item.name">
+        <mt-loadmore class="section-item" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <div v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
+            <div class="item-img">
+              <img :src="item.image" :alt="item.name">
+            </div>
+            <div class="item-title text-overflow">
+              <h3>{{item.name}}</h3>
+              <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
+            </div>
           </div>
-          <div class="item-title text-overflow">
-            <h3>{{item.name}}</h3>
-            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
-          </div>
-        </div>
+        </mt-loadmore>
       </div>
     </div>
     <div class="divider"></div>
@@ -65,11 +67,16 @@ export default {
   },
   data() {
     return {
-      totalCount: 0,
       page: 1,
       pageSize: 10,
+      pageCount: 2,
+      totalCount: 0,
       parkList: [],
       selected: 'park',
+      allLoaded: false,
+      bottomPullText: '上拉加载更多...',
+      bottomDropText: '释放更新数据...',
+      bottomLoadingText: '正在努力加载...'
     };
   },
   created() {},
@@ -86,8 +93,23 @@ export default {
       }
       this.$http.get(api.parkList,{params: params}).then(res => {
         that.totalCount = res._meta.totalCount
-        that.parkList = res.data
+        that.parkList = that.parkList.concat(res.data)
       })
+    },
+    //上拉加载更多
+    loadBottom() {
+      let that = this
+      setTimeout(() => {
+        that.page += 1
+        if(that.page > that.pageCount){
+          that.allLoaded = true;// 若数据已全部获取完毕
+        }
+        that.getParkList()
+        that.$refs.loadmore.onBottomLoaded();
+      }, 50)
+    },
+    handleBottomChange: function(status){
+      //console.log(status)
     },
     goParkDetail: function(item) {
       // 去往园区详情页面

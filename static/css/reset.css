@@ -155,6 +155,9 @@ a {
     height: 0;
     padding: 0.7333rem 0;
 }
+.bg-white{
+    background-color: #fff;
+}
 .bbottom{
     border-bottom: .5px solid #ddd;
 }

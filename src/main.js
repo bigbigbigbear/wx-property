@@ -8,7 +8,6 @@ import axiosPlugin from "./server"
 import { Navbar, Tabbar, TabItem, Cell, Picker, Popup, DatetimePicker, TabContainer, TabContainerItem, Loadmore } from 'mint-ui';
 import './assets/css/my-mint.scss';   //全局修改mint-UI样式  
 
-Vue.use(require('vue-wechat-title'))
 Vue.use(axiosPlugin)
 Vue.component(Navbar.name, Navbar);
 Vue.component(Tabbar.name, Tabbar);

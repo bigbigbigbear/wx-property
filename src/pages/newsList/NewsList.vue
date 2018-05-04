@@ -1,12 +1,12 @@
 <template>
-	<div class="container" v-wechat-title="$route.meta.title">
+	<div class="container">
     <div class="section">
       <div class="section-hd">
         <h3>新闻列表</h3>
       </div>
       <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section4-bd">
-        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" ref="loadmore">
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
           <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
             <h3 class="text-overflow">{{item.title}}</h3>
             <p class="font-grey text-overflow-2"><span>{{item.intro}}</span></p>
@@ -15,10 +15,19 @@
         </mt-loadmore>
       </div>
     </div>
-    <div class="divider"></div>
 	</div>
 </template>
 <style scoped>
+.container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: -100;
+}
 .section {
   width: 100%;
   background-color: #fff;
@@ -58,7 +67,7 @@ export default {
     return {
       page: 1,
       pageSize: 8,
-      pageCount: 1,
+      pageCount: 2,
       totalCount: 0,
       newsList: [],
       allLoaded: false,
@@ -68,10 +77,10 @@ export default {
     };
   },
   created() {
-    
+    this.getNewsList()
   },
   mounted() {
-    this.getNewsList()
+    
   },
   methods: {
     //获取新闻列表
@@ -89,17 +98,20 @@ export default {
     },
     loadBottom() {
       let that = this
-      this.page += 1
-      if(this.page > this.pageCount){
-        this.allLoaded = true;// 若数据已全部获取完毕
-      }
       setTimeout(() => {
-        that.getNewsList
-      }, 50);
-      this.$refs.loadmore.onBottomLoaded();
+        that.page += 1
+        if(that.page > that.pageCount){
+          that.allLoaded = true;// 若数据已全部获取完毕
+        }
+        that.getNewsList()
+        that.$refs.loadmore.onBottomLoaded();
+      }, 50)
+    },
+    handleBottomChange: function(status){
+      //console.log(status)
     },
     goNewsDetail: function(item){
-      // 去往招租详情页面
+      // 去往新闻详情页面
       this.$router.push({
         name: "newsDetail",
         params: {

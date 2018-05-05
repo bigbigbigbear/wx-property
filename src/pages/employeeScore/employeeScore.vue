@@ -23,14 +23,14 @@
 			</div>
 			<div class="section-bd">
 				<div class="item">
-					<star-score class="star" :prop-score="scored" @getScore="getEmployeeScore"></star-score>
+					<star-score class="star" :prop-score="employeeInfo.score" @getScore="getEmployeeScore"></star-score>
 					<div class="star-info"><span>{{starInfo}}</span></div>
 				</div>
 				<div class="item">
-					<textarea v-model="evaluate" placeholder="对他评价"></textarea>
+					<textarea v-model="content" placeholder="对他评价"></textarea>
 				</div>
 				<div class="item-btn">
-					<span class="btn btn-large btn-radius" @click="submitScore">提交评分</span>
+					<span :class="['btn','btn-large','btn-radius', scored != 0 ? 'btn-diseabled' : '']" @click="submitScore">提交评分</span>
 				</div>
 			</div>
 		</div>
@@ -107,6 +107,7 @@
 }
 </style>
 <script type="text/babel">
+import { Toast } from 'mint-ui';
 import StarScore from '@/components/StarScore'
 import api from '../../server/api'
 export default {
@@ -118,7 +119,7 @@ export default {
 			employeeInfo: {},
 			scored: 0,
 			newScore: 0,
-			evaluate: ''
+			content: ''
     };
   },
   computed: {
@@ -155,19 +156,44 @@ export default {
 			let that = this
 			let pid = this.$route.params.pid
 			let eid = this.$route.params.eid
+			let user_id = localStorage.getItem('user_id')
       let params = {
 				park_id: pid,
 				employee_id: eid,
-				user_id: 1
+				user_id: user_id
       }
       this.$http.get(api.employeeDetail,{params: params}).then(res => {
 				that.employeeInfo = res.data.detail
+				that.newScore = res.data.detail.score
 				that.scored = res.data.scored
       })
 		},
 		// 提交评分
 		submitScore: function(){
-			console.log(this.scored)
+			let that = this
+			let eid = this.$route.params.eid
+			let user_id = localStorage.getItem('user_id')
+      let params = {
+				employee_id: eid,
+				user_id: user_id,
+				score: this.newScore,
+				content: this.content
+			}
+			if(this.scored != 0){
+				Toast({
+					message: '你已评过分了哦~'
+				})
+				this.content = ''
+				return false
+			}
+      this.$http.post(api.employeeScore, params).then(res => {
+				Toast({
+					message: '评分成功！'
+				})
+				that.employeeInfo.score = res.data
+				that.newScore = res.data
+				that.content = ''
+      })
 		},
 		//获取评分
 		getEmployeeScore: function(val){

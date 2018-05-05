@@ -43,13 +43,13 @@
       <div class="section-bd section3-bd">
         <div class="section3-item" v-for="(item, index) in rentList" :key="index">
           <div class="section3-item__l">
-            <img :src="item.rent_img_url" :alt="item.rent_name" srcset="">
+            <img :src="item.image" :alt="item.title">
           </div>
           <div class="section3-item__r">
-            <h3 class="text-overflow">{{item.rent_name}}</h3>
-            <p class="font-grey"><span>地点：{{item.rent_addr}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.rent_area}}</span></p>
-            <p class="font-grey"><span>租金：{{item.rent_price}}</span></p>
-            <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情" srcset=""></a></p>
+            <h3 class="text-overflow">{{item.title}}</h3>
+            <p class="font-grey"><span>地点：{{item.address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.area}}</span></p>
+            <p class="font-grey"><span>租金：{{item.rent}}</span></p>
+            <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情"></a></p>
           </div>
         </div>
       </div>
@@ -205,6 +205,7 @@ export default {
   },
   data() {
     return {
+      userInfo: {},
       companyInfo:{
         name: '深圳市七星级科技有限公司',
         desc:"七星級科技以“中國產業園“”運營的領航，者”爲目標，以“深圳先鋒文化前進的風向標”爲使命，致力於打造宜居宜業的創意文化產業園區。奉行“业主省心、企业开心、员工顺心、政府放心”的宗旨，已成为“优化产业结构，服务产业升级”的排头兵和先行者。",
@@ -216,40 +217,10 @@ export default {
       parkSize: 4,
       parkTotal: 0,
       parkList: [],
-      rentList: [
-        {
-          rent_id: 1,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 2,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 3,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 4,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        }
-      ],
+      rentPage: 1,
+      rentSize: 4,
+      rentTotal: 0,
+      rentList: [],
       newsPage: 1,
       newsSize: 4,
       newsTotal: 0,
@@ -261,10 +232,28 @@ export default {
     
   },
   mounted() {
+    this.login()
     this.getParkList()
+    this.getRentList()
     this.getNewsList()
   },
   methods: {
+    login: function(){
+      let that = this
+      let params = {
+        openid: '111',
+        nickname: 'bear',
+        avatar: '',
+        gender: 'male',
+        province: '广东',
+        city: '深圳',
+        mobile: '13800000000'
+      }
+      this.$http.post(api.login, params).then(res => {
+        this.userInfo = res.data
+        localStorage.setItem('user_id',res.data.user_id)
+      })
+    },
     goAboutDetail: function() {
       // 去往关于我们详情页面
       this.$router.push({
@@ -298,6 +287,18 @@ export default {
         }
       })
     },
+    //获取招租列表
+    getRentList: function(){
+      let that = this
+      let params = {
+        page: this.rentPage,
+        pageSize: this.rentSize
+      }
+      this.$http.get(api.rentList,{params: params}).then(res => {
+        that.rentTotal = res._meta.totalCount
+        that.rentList = res.data
+      })
+    },
     goRentList: function() {
       // 去往招租列表页面
       this.$router.push({
@@ -309,7 +310,7 @@ export default {
       this.$router.push({
         name: "rentDetail",
         params: {
-          rid: item.rent_id
+          rid: item.zu_id
         }
       })
     },

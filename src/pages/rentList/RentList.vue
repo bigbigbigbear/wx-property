@@ -4,24 +4,34 @@
       <div class="section-hd">
         <h3>招租列表</h3>
       </div>
+      <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section3-bd">
         <div class="section3-item" v-for="(item, index) in rentList" :key="index">
           <div class="section3-item__l">
-            <img :src="item.rent_img_url" :alt="item.rent_name" srcset="">
+            <img :src="item.image" :alt="item.title">
           </div>
           <div class="section3-item__r">
-            <h3 class="text-overflow">{{item.rent_name}}</h3>
-            <p class="font-grey"><span>地点：{{item.rent_addr}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.rent_area}}</span></p>
-            <p class="font-grey"><span>租金：{{item.rent_price}}</span></p>
-            <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情" srcset=""></a></p>
+            <h3 class="text-overflow">{{item.title}}</h3>
+            <p class="font-grey"><span>地点：{{item.address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.area}}</span></p>
+            <p class="font-grey"><span>租金：{{item.rent}}</span></p>
+            <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情"></a></p>
           </div>
         </div>
       </div>
     </div>
-    <div class="divider"></div>
 	</div>
 </template>
 <style scoped>
+.container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: -100;
+}
 .section {
   width: 100%;
   background-color: #fff;
@@ -69,56 +79,61 @@
 }
 </style>
 <script type="text/babel">
+import api from '../../server/api'
 export default {
   components: {
   },
   data() {
     return {
-      rentList: [
-        {
-          rent_id: 1,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 2,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 3,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        },
-        {
-          rent_id: 4,
-          rent_img_url: "",
-          rent_name: "福永桥头一楼1100平方厂房出租",
-          rent_addr: "宝安区-福永",
-          rent_area: "5000m²",
-          rent_price: "25元/m²"
-        }
-      ]
+      page: 1,
+      pageSize: 7,
+      pageCount: 2,
+      totalCount: 1,
+      rentList: [],
+      allLoaded: false,
+      bottomPullText: '上拉加载更多...',
+      bottomDropText: '释放更新数据...',
+      bottomLoadingText: '正在努力加载...'
     };
   },
-  created() {},
+  created() {
+    this.getRentList()
+  },
   mounted() {},
   methods: {
+    //获取招租列表
+    getRentList: function(){
+      let that = this
+      let params = {
+        page: this.page,
+        pageSize: this.pageSize
+      }
+      this.$http.get(api.rentList,{params: params}).then(res => {
+        that.pageCount = res._meta.pageCount
+        that.totalCount = res._meta.totalCount
+        that.rentList = that.rentList.concat(res.data)
+      })
+    },
+    loadBottom() {
+      let that = this
+      setTimeout(() => {
+        that.page += 1
+        if(that.page > that.pageCount){
+          that.allLoaded = true;// 若数据已全部获取完毕
+        }
+        that.getRentList()
+        that.$refs.loadmore.onBottomLoaded();
+      }, 50)
+    },
+    handleBottomChange: function(status){
+      //console.log(status)
+    },
     goRentDetail: function(item){
       // 去往招租详情页面
       this.$router.push({
         name: "rentDetail",
         params: {
-          rid: item.rent_id
+          rid: item.zu_id
         }
       })
     }

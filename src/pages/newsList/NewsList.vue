@@ -68,7 +68,7 @@ export default {
       page: 1,
       pageSize: 8,
       pageCount: 2,
-      totalCount: 0,
+      totalCount: 1,
       newsList: [],
       allLoaded: false,
       bottomPullText: '上拉加载更多...',

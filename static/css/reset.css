@@ -200,3 +200,6 @@ a {
     height: 0.6667rem;
     line-height: 0.6667rem;
 }
+.btn-diseabled{
+    opacity: 0.5;
+}

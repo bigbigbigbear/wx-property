@@ -11,7 +11,7 @@
         <div class="section-bd__l">
           <img class="img-logo" src="../../assets/images/icon-logo.png" alt="logo">
         </div>
-        <div class="section-bd__r">{{companyInfo.desc}}</div>
+        <div class="section-bd__r">{{about}}</div>
       </div>
     </div>
     <div class="section">
@@ -76,10 +76,10 @@
         </h3>
       </div>
       <div class="section-bd section5-bd">
-        <p>{{companyInfo.name}}</p>
-        <p>电话：{{companyInfo.tel}}</p>
-        <p>邮箱：{{companyInfo.email}}</p>
-        <p>地址：{{companyInfo.address}}</p>
+        <p>{{contact.name}}</p>
+        <p @click="phoneCall(contact.tel)">电话：{{contact.tel}}</p>
+        <p>邮箱：{{contact.email}}</p>
+        <p>地址：{{contact.address}}</p>
       </div>
     </div>
     <div class="divider"></div>
@@ -206,13 +206,8 @@ export default {
   data() {
     return {
       userInfo: {},
-      companyInfo:{
-        name: '深圳市七星级科技有限公司',
-        desc:"七星級科技以“中國產業園“”運營的領航，者”爲目標，以“深圳先鋒文化前進的風向標”爲使命，致力於打造宜居宜業的創意文化產業園區。奉行“业主省心、企业开心、员工顺心、政府放心”的宗旨，已成为“优化产业结构，服务产业升级”的排头兵和先行者。",
-        tel: '0755-33656750',
-        email: '13249851256@126.com',
-        address: '深圳市宝安区新安街道创业二路北二巷5号七星创意工场'
-      },
+      selected: 'home',
+      about: {},
       parkPage: 1,
       parkSize: 4,
       parkTotal: 0,
@@ -225,7 +220,7 @@ export default {
       newsSize: 4,
       newsTotal: 0,
       newsList: [],
-      selected: 'home'
+      contact: {}
     };
   },
   created() {
@@ -233,6 +228,7 @@ export default {
   },
   mounted() {
     this.login()
+    this.getIndexInfo()
     this.getParkList()
     this.getRentList()
     this.getNewsList()
@@ -252,6 +248,15 @@ export default {
       this.$http.post(api.login, params).then(res => {
         this.userInfo = res.data
         localStorage.setItem('user_id',res.data.user_id)
+      })
+    },
+    //获取首页信息
+    getIndexInfo: function(){
+      let that = this
+      let params = {}
+      this.$http.get(api.index,{params: params}).then(res => {
+        that.about = res.data.about
+        that.contact = res.data.contact
       })
     },
     goAboutDetail: function() {
@@ -340,6 +345,9 @@ export default {
           nid: item.news_id
         }
       })
+    },
+    phoneCall: function(tel){
+      window.location.href = "tel://" + tel
     }
   },
   filters: {

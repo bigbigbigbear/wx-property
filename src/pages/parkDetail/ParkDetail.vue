@@ -33,7 +33,7 @@
 				</div>
 				<div class="section-content">
 					<div class="item" v-for="(item, index) in deviceList" :key="index">
-						<span>{{item.device_name}}</span>
+						<span>{{item.name}}</span>
 						<span class="btn btn-mini" @click="goDeviceBook(item)"><img src="../../assets/images/icon-book-1.png" alt="预约"> 预约</span>
 					</div>
 				</div>
@@ -130,24 +130,12 @@ export default {
 	data() {
 		return {
 			parkInfo: {},
-			deviceList: [
-				{
-					device_id: 1,
-					device_name: '100人大会议室'
-				},
-				{
-					device_id: 2,
-					device_name: '100人大会议室'
-				},
-				{
-					device_id: 3,
-					device_name: '100人大会议室'
-				}
-			]
+			deviceList: []
 		}
 	},
 	created() {
 		this.getParkInfo()
+		this.getDeviceList()
 	},
 	mounted() {
     
@@ -162,6 +150,17 @@ export default {
       }
       this.$http.get(api.parkDetail,{params: params}).then(res => {
         that.parkInfo = res.data
+      })
+		},
+		//获取设施列表
+		getDeviceList: function(){
+			let that = this
+			let pid = this.$route.params.pid
+      let params = {
+        park_id: pid
+      }
+      this.$http.get(api.deviceList,{params: params}).then(res => {
+        that.deviceList = res.data
       })
 		},
 		//园区评分页面
@@ -201,7 +200,7 @@ export default {
 				name: 'deviceBook',
 				params: {
 					pid: pid,
-					did: item.device_id
+					did: item.area_id
 				}
 			})
 		}

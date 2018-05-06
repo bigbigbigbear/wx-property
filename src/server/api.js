@@ -9,7 +9,9 @@ export default {
 
   parkList: '/park/list',               //园区列表 page,pageSize
   parkDetail: '/park/view',             //园区详情，params:park_id 
-  deviceList: '/area/list',               //设施列表
+  parkScore: '/park/score',             //园区评分，params:user_id:用户ID，park_id:园区ID，surroundings:环境，service:服务，facilities:设施
+  deviceList: '/area/list',             //设施列表
+  deviceBook: '/booking/create',        //设施预约
 
 
   newsList: '/news/list',               //新闻列表 

@@ -26,4 +26,6 @@ export default {
 
   parkScoreList: '/park-score-list',               //园区评分列表 page,pageSize,user_id
   employeeScoreList: '/employee-score-list',               //工作人员评分列表 page,pageSize,user_id
+
+  advice: '/feedback/create',               //投诉建议 user_id:用户ID,timeliness:时效,manner:服务态度,satisfaction:满意度,other:其他建议
 }

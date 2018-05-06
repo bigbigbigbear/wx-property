@@ -55,7 +55,10 @@ Axios.interceptors.response.use(
     }
   },
   error => {
-    console.log(error.response)
+    
+    Toast({
+      message: error.response.data.err_msg
+    })
     // 用户登录的时候会拿到一个基础信息,比如用户名,token,过期时间戳
     // 直接丢localStorage或者sessionStorage
     // if (!window.localStorage.getItem("loginUserBaseInfo")) {

@@ -12,7 +12,7 @@
 				<mt-loadmore :bottom-method="loadBottom1" :bottom-all-loaded="allLoaded1" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" ref="loadmore1">
 					<div class="item" v-for="(item, index) in list1" :key="index">
 						<div>{{item.list_content}}<span class="font-orange">{{item.score}}分</span></div>
-						<div><span class="font-grey">{{item.created_at}}</span></div>
+						<div><span class="font-grey">{{item.created_at | formateTime}}</span></div>
 					</div>
 				</mt-loadmore>
       </mt-tab-container-item>
@@ -21,7 +21,7 @@
 				<mt-loadmore :bottom-method="loadBottom2" :bottom-all-loaded="allLoaded2" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" ref="loadmore2">
 					<div class="item" v-for="(item, index) in list2" :key="index">
 						<div>{{item.list_content}}<span class="font-orange">{{item.score}}分</span></div>
-						<div><span class="font-grey">{{item.created_at}}</span></div>
+						<div><span class="font-grey">{{item.created_at | formateTime}}</span></div>
 					</div>
 				</mt-loadmore>
       </mt-tab-container-item>
@@ -55,6 +55,7 @@
 </style>
 <script type="text/babel">
 import api from '../../server/api'
+import { formateDate } from '../../utils/utils'
 export default {
 	components: {
 		
@@ -145,6 +146,11 @@ export default {
         that.$refs.loadmore2.onBottomLoaded();
       }, 50)
     }
-	}
+	},
+	filters: {
+    formateTime: function (value) {
+      return formateDate(value*1000, 'yyyy-MM-dd')
+    }
+  }
 }
 </script>

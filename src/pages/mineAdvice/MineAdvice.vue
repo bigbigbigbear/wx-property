@@ -243,11 +243,13 @@ export default {
       this.type = type
       return false
     },
+    // 上传图片
     onFileChange: function (e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       this.createImage(files, e);
     },
+    // 图片压缩转化
     createImage: function (file, e) {
       let vm = this;
       lrz(file[0], {

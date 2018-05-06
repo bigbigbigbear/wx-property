@@ -6,17 +6,19 @@
       </div>
       <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section3-bd">
-        <div class="section3-item" v-for="(item, index) in rentList" :key="index">
-          <div class="section3-item__l">
-            <img :src="item.image" :alt="item.title">
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <div class="section3-item" v-for="(item, index) in rentList" :key="index">
+            <div class="section3-item__l">
+              <img :src="item.image" :alt="item.title">
+            </div>
+            <div class="section3-item__r">
+              <h3 class="text-overflow">{{item.title}}</h3>
+              <p class="font-grey"><span>地点：{{item.address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.area}}</span></p>
+              <p class="font-grey"><span>租金：{{item.rent}}</span></p>
+              <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情"></a></p>
+            </div>
           </div>
-          <div class="section3-item__r">
-            <h3 class="text-overflow">{{item.title}}</h3>
-            <p class="font-grey"><span>地点：{{item.address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.area}}</span></p>
-            <p class="font-grey"><span>租金：{{item.rent}}</span></p>
-            <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情"></a></p>
-          </div>
-        </div>
+        </mt-loadmore>
       </div>
     </div>
 	</div>

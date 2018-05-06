@@ -23,4 +23,7 @@ export default {
   employeeScore: '/employee/score',     //员工评分，params:employee_id ,user_id, score, content
   rentList: '/zu/list',                 //招租列表 
   rentDetail: '/zu/view',               //招租详情，params:zu_id 
+
+  parkScoreList: '/park-score-list',               //园区评分列表 page,pageSize,user_id
+  employeeScoreList: '/employee-score-list',               //工作人员评分列表 page,pageSize,user_id
 }

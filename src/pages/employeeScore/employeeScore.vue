@@ -171,9 +171,11 @@ export default {
 		// 提交评分
 		submitScore: function(){
 			let that = this
+			let pid = this.$route.params.pid
 			let eid = this.$route.params.eid
 			let user_id = localStorage.getItem('user_id')
       let params = {
+				park_id: pid,
 				employee_id: eid,
 				user_id: user_id,
 				score: this.newScore,
@@ -190,9 +192,19 @@ export default {
 				Toast({
 					message: '评分成功！'
 				})
+
 				that.employeeInfo.score = res.data
 				that.newScore = res.data
 				that.content = ''
+
+				setTimeout(() => {
+					that.$router.push({
+						name: 'employeeList',
+						params: {
+							pid: pid
+						}
+					})
+				}, 1000)
       })
 		},
 		//获取评分

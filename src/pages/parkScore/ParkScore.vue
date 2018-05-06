@@ -66,27 +66,66 @@
 </style>
 <script type="text/babel">
 import StarScore from '@/components/StarScore'
+import { Toast } from 'mint-ui';
+import api from '../../server/api'
 export default {
   components: {
 		StarScore
 	},
   data() {
     return {
-			averScore: 9,
-			envScore: 9,
-			deviceScore: 9,
-			serviceScore: 9,
+			averScore: 0,
+			envScore: 0,
+			deviceScore: 0,
+			serviceScore: 0,
     };
   },
   computed: {
     
   },
-  created() {},
+  created() {
+		this.getParkInfo()
+	},
   mounted() {},
   methods: {
+		//获取园区详情
+		getParkInfo: function(){
+			let that = this
+			let pid = this.$route.params.pid
+      let params = {
+        park_id: pid
+      }
+      this.$http.get(api.parkDetail,{params: params}).then(res => {
+        that.averScore = res.data.score
+      })
+		},
 		// 提交评分
 		submitScore: function(){
-
+			let that = this
+			let pid = this.$route.params.pid
+			let user_id = localStorage.getItem('user_id')
+      let params = {
+				park_id: pid,
+				user_id: user_id,
+				surroundings: this.envScore,
+				service: this.serviceScore,
+				facilities: this.deviceScore
+			}
+      this.$http.post(api.parkScore, params).then(res => {
+				Toast({
+					message: '评分成功！'
+				})
+				that.averScore = res.data
+				setTimeout(() => {
+					that.$router.push({
+						name: 'parkDetail',
+						params: {
+							pid: pid
+						}
+					})
+				}, 1000)
+				
+      })
 		},
 		// 获取环境评分
 		getEnvScore: function(data){

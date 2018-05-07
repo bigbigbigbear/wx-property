@@ -12,6 +12,7 @@ export default {
   parkScore: '/park/score',             //园区评分，params:user_id:用户ID，park_id:园区ID，surroundings:环境，service:服务，facilities:设施
   deviceList: '/area/list',             //设施列表
   deviceBook: '/booking/create',        //设施预约
+  faultRepair: '/repair/create',        //故障报修
 
 
   newsList: '/news/list',               //新闻列表 
@@ -29,4 +30,5 @@ export default {
 
   advice: '/feedback/create',               //投诉建议 user_id:用户ID,timeliness:时效,manner:服务态度,satisfaction:满意度,other:其他建议
   userInfo: '/user/index',               //投诉建议 user_id:用户ID
+  mineRepair: '/user/repair-list',               //我的报修 user_id:用户ID
 }

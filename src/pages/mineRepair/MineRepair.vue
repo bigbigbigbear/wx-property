@@ -2,15 +2,22 @@
 	<div class="container">
     <div class="section">
       <div class="section-hd">
-        <h3>新闻列表</h3>
+        <h3>我的报修</h3>
       </div>
       <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section4-bd">
-        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
-          <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
-            <h3 class="text-overflow">{{item.title}}</h3>
-            <p class="font-grey text-overflow-2"><span>{{item.intro}}</span></p>
-            <p class="font-grey"><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.created_at | formateTime}}</p>
+        <mt-loadmore class="mt-loadmore" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <div class="section4-item" v-for="(item, index) in repairList" :key="index" @click="goRepairDetail(item)">
+            <h3 class="text-overflow">{{item.park_name}}</h3>
+            <p class="font-grey text-overflow-2"><span>{{item.content}}</span></p>
+            <div class="font-grey section-foot">
+              <div>
+                <img class="item-img__time" src="../../assets/images/icon-time.png" alt=""> {{item.created_at | formateTime}}
+              </div>
+              <div>
+                <span class="foot-r">{{item.status | formateStatus}}</span>
+              </div>
+            </div>
           </div>
         </mt-loadmore>
       </div>
@@ -47,10 +54,24 @@
 	flex-wrap: wrap;
   padding: 0 0.2667rem 0.2667rem;
 }
+.mt-loadmore{
+  width: 100%;
+}
 .section4-item{
   width: 100%;
   padding: 0.2667rem 0;
   border-bottom: 0.0067rem solid #eee;
+}
+.section-foot{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.foot-r{
+  padding: 0 0.1333rem;
+  border-radius: 0.0533rem;
+  background-color: #ccc;
+  color: #fff;
 }
 .item-img__time {
   width: 0.2667rem;
@@ -66,10 +87,10 @@ export default {
   data() {
     return {
       page: 1,
-      pageSize: 8,
+      pageSize: 10,
       pageCount: 2,
       totalCount: 1,
-      newsList: [],
+      repairList: [],
       allLoaded: false,
       bottomPullText: '上拉加载更多...',
       bottomDropText: '释放更新数据...',
@@ -77,23 +98,25 @@ export default {
     };
   },
   created() {
-    this.getNewsList()
+    this.getRepairList()
   },
   mounted() {
     
   },
   methods: {
-    //获取新闻列表
-    getNewsList: function(){
+    //获取我的报修列表
+    getRepairList: function(){
       let that = this
+      let user_id = localStorage.getItem('user_id')
       let params = {
+        user_id: user_id,
         page: this.page,
         pageSize: this.pageSize
       }
-      this.$http.get(api.newsList,{params: params}).then(res => {
+      this.$http.get(api.mineRepair,{params: params}).then(res => {
         that.pageCount = res._meta.pageCount
         that.totalCount = res._meta.totalCount
-        that.newsList = that.newsList.concat(res.data)
+        that.repairList = that.repairList.concat(res.data)
       })
     },
     loadBottom() {
@@ -103,19 +126,19 @@ export default {
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
         }
-        that.getNewsList()
+        that.getRepairList()
         that.$refs.loadmore.onBottomLoaded();
       }, 50)
     },
     handleBottomChange: function(status){
       //console.log(status)
     },
-    goNewsDetail: function(item){
+    goRepairDetail: function(item){
       // 去往新闻详情页面
       this.$router.push({
-        name: "newsDetail",
+        name: "repairDetail",
         params: {
-          nid: item.news_id
+          nid: item.repair_id
         }
       })
     }
@@ -123,6 +146,20 @@ export default {
   filters: {
     formateTime: function (value) {
       return formateDate(value*1000, 'yyyy-MM-dd')
+    },
+    formateStatus: function (value) {
+      value = parseInt(value)
+      switch(value){
+        case 0:
+          return '已提交'
+          break;
+        case 2:
+          return '处理完成'
+          break;  
+        default:
+          return '处理中'
+          break;    
+      }
     }
   }
 };

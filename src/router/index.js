@@ -19,6 +19,8 @@ const MineBill = () => import('@/pages/mineBill/MineBill')
 const BillDetail = () => import('@/pages/billDetail/BillDetail')
 const MineScore = () => import('@/pages/mineScore/MineScore')
 const MineAdvice = () => import('@/pages/mineAdvice/MineAdvice')
+const MineRepair = () => import('@/pages/mineRepair/MineRepair')
+const MineBook = () => import('@/pages/mineBook/MineBook')
 
 Vue.use(Router)
 
@@ -192,6 +194,24 @@ export default new Router({
         requireLogin: true
       },
       component: MineAdvice
+    },
+    {
+      path: '/mineRepair',
+      name: 'mineRepair',
+      meta: {
+        title: '我的报修',
+        requireLogin: true
+      },
+      component: MineRepair
+    },
+    {
+      path: '/mineBook',
+      name: 'mineBook',
+      meta: {
+        title: '我的预约',
+        requireLogin: true
+      },
+      component: MineBook
     }
   ]
 })

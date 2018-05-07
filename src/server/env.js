@@ -10,12 +10,13 @@ let baseUrl = '';
 let protocol = location.protocol;
 
 if (process.env.NODE_ENV === 'development') {
-	baseUrl = 'http://120.79.61.182/api/v1'              //开发环境接口
+	//baseUrl = 'http://120.79.61.182/api/v1'        //开发环境接口
+	baseUrl = 'http://www.szqxj168.com/api/v1'
 }else if(process.env.NODE_ENV === 'production'){
 	if(protocol === 'https:'){
-		baseUrl = protocol + '//120.79.61.182/api/v1'          //生产环境https接口地址
+		baseUrl = protocol + '//www.szqxj168.com/api/v1'          //生产环境https接口地址
 	}else{
-		baseUrl = protocol + '//120.79.61.182/api/v1'          //生产环境http接口地址
+		baseUrl = protocol + '//www.szqxj168.com/api/v1'          //生产环境http接口地址
 	}
 }
 

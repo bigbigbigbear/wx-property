@@ -248,6 +248,7 @@ export default {
       this.$http.post(api.login, params).then(res => {
         this.userInfo = res.data
         localStorage.setItem('user_id',res.data.user_id)
+        localStorage.setItem('user_token',res.data.user_token)
       })
     },
     //获取首页信息

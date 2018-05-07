@@ -28,4 +28,5 @@ export default {
   employeeScoreList: '/employee-score-list',               //工作人员评分列表 page,pageSize,user_id
 
   advice: '/feedback/create',               //投诉建议 user_id:用户ID,timeliness:时效,manner:服务态度,satisfaction:满意度,other:其他建议
+  userInfo: '/user/index',               //投诉建议 user_id:用户ID
 }

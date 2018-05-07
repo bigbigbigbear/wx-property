@@ -11,8 +11,14 @@
 			<mt-cell title="我的账单" value="" is-link :to="{name:'mineBill'}">
 				<img slot="icon" src="../../assets/images/icon-bill.png" width="24" height="24">
 			</mt-cell>
-			<mt-cell title="我的评分" :value="scoreAmount" is-link :to="{name:'mineScore'}">
+			<mt-cell title="我的评分" :value="userInfo2.count_score" is-link :to="{name:'mineScore'}">
 				<img slot="icon" src="../../assets/images/icon-score.png" width="24" height="24">
+			</mt-cell>
+			<mt-cell title="我的预约" :value="userInfo2.count_booking" is-link :to="{name:'mineBook'}">
+				<img slot="icon" src="../../assets/images/icon-book.png" width="24" height="24">
+			</mt-cell>
+			<mt-cell title="我的报修" :value="userInfo2.count_repair" is-link :to="{name:'mineRepair'}">
+				<img slot="icon" src="../../assets/images/icon-repair.png" width="24" height="24">
 			</mt-cell>
 			<mt-cell title="投诉建议" value="" is-link :to="{name:'mineAdvice'}">
 				<img slot="icon" src="../../assets/images/icon-advice.png" width="24" height="24">
@@ -56,6 +62,7 @@ import FootTab from '@/components/FootTab'
 import iconBill from '@/assets/images/icon-bill.png'
 import iconScore from '@/assets/images/icon-score.png'
 import iconAdvice from '@/assets/images/icon-advice.png'
+import api from '../../server/api'
 export default {
   components: {
     FootTab
@@ -68,17 +75,30 @@ export default {
 				user_name: '我是美女',
 				user_park: '南山高新科技园'
 			},
+			userInfo2: {},
 			icons: {
 				iconBill: iconBill,
 				iconScore: iconScore,
 				iconAdvice: iconAdvice
-			},
-			scoreAmount: 5
+			}
     };
   },
-  created() {},
+  created() {
+		this.getUserInfo()
+	},
   mounted() {},
   methods: {
+		//获取我的信息
+    getUserInfo: function(){
+			let that = this
+			let user_id = localStorage.getItem('user_id')
+      let params = {
+				user_id: user_id
+			}
+      this.$http.get(api.userInfo,{params: params}).then(res => {
+        that.userInfo2 = res.data
+      })
+    },
     goMineBill: function(){
       // 我的账单页面
       this.$router.push({

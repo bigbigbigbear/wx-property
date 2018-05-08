@@ -2,8 +2,8 @@
 	<div class="container">
 		<div class="section1">
 			<div class="section-bd">
-				<img :src="userInfo.user_avatar" :alt="userInfo.user_name">
-				<h4>{{userInfo.user_name}}</h4>
+				<img :src="userInfo.avatar" :alt="userInfo.nickname">
+				<h4>{{userInfo.nickname}}</h4>
 				<p class="font-grey">{{userInfo.user_park}}</p>
 			</div>
 		</div>
@@ -11,13 +11,13 @@
 			<mt-cell title="我的账单" value="" is-link :to="{name:'mineBill'}">
 				<img slot="icon" src="../../assets/images/icon-bill.png" width="24" height="24">
 			</mt-cell>
-			<mt-cell title="我的评分" :value="userInfo2.count_score" is-link :to="{name:'mineScore'}">
+			<mt-cell title="我的评分" :value="userInfo.count_score" is-link :to="{name:'mineScore'}">
 				<img slot="icon" src="../../assets/images/icon-score.png" width="24" height="24">
 			</mt-cell>
-			<mt-cell title="我的预约" :value="userInfo2.count_booking" is-link :to="{name:'mineBook'}">
+			<mt-cell title="我的预约" :value="userInfo.count_booking" is-link :to="{name:'mineBook'}">
 				<img slot="icon" src="../../assets/images/icon-book.png" width="24" height="24">
 			</mt-cell>
-			<mt-cell title="我的报修" :value="userInfo2.count_repair" is-link :to="{name:'mineRepair'}">
+			<mt-cell title="我的报修" :value="userInfo.count_repair" is-link :to="{name:'mineRepair'}">
 				<img slot="icon" src="../../assets/images/icon-repair.png" width="24" height="24">
 			</mt-cell>
 			<mt-cell title="投诉建议" value="" is-link :to="{name:'mineAdvice'}">
@@ -70,12 +70,7 @@ export default {
   data() {
     return {
 			selected: 'mine',
-			userInfo: {
-				user_avatar: '',
-				user_name: '我是美女',
-				user_park: '南山高新科技园'
-			},
-			userInfo2: {},
+			userInfo: {},
 			icons: {
 				iconBill: iconBill,
 				iconScore: iconScore,
@@ -96,7 +91,7 @@ export default {
 				user_id: user_id
 			}
       this.$http.get(api.userInfo,{params: params}).then(res => {
-        that.userInfo2 = res.data
+        that.userInfo = res.data
       })
     },
     goMineBill: function(){

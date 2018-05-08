@@ -4,7 +4,7 @@
 			<div class="section-hd text-overflow bbottom">
 				<h3>{{companyInfo.title}}</h3>
 			</div>
-			<div class="section-hd" v-html="companyInfo.info"></div>
+			<div class="section-hd" v-html="companyInfo.content"></div>
 		</div>
 	</div>
 </template>
@@ -20,27 +20,31 @@
 }
 </style>
 <script type="text/babel">
-
+import api from '../../server/api'
 export default {
 	components: {
 		
 	},
 	data() {
 		return {
-			companyInfo: {
-				title: '下一个前海？深圳再迎国家级重磅规划',
-				info: ''
-			}
+			companyInfo: {}
 		}
 	},
 	created() {
-
+		this.getCompanyInfo()
 	},
 	mounted() {
     
 	},
 	methods: {
-
+		//获取公司信息
+    getCompanyInfo: function(){
+			let that = this
+      let params = {}
+      this.$http.get(api.about,{params: params}).then(res => {
+        that.companyInfo = res.data
+      })
+    }
 	}
 }
 </script>

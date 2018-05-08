@@ -6,6 +6,7 @@
 export default {
   login: '/user/login',                 //注册   openid:微信openid  ，nickname:昵称，avatar:头像，gender:性别，province:省份，city:城市，mobile:手机号码
   index: '/index',                      //首页信息
+  about: '/about',                      //公司信息
 
   parkList: '/park/list',               //园区列表 page,pageSize
   parkDetail: '/park/view',             //园区详情，params:park_id 

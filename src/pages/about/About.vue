@@ -2,9 +2,9 @@
 	<div class="container">
 		<div class="section">
 			<div class="section-hd text-overflow bbottom">
-				<h3>{{companyInfo.title}}</h3>
+				<h3>关于我们</h3>
 			</div>
-			<div class="section-hd" v-html="companyInfo.content"></div>
+			<div class="section-hd" v-html="companyInfo"></div>
 		</div>
 	</div>
 </template>

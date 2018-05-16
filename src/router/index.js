@@ -21,7 +21,7 @@ const MineScore = () => import('@/pages/mineScore/MineScore')
 const MineAdvice = () => import('@/pages/mineAdvice/MineAdvice')
 const MineRepair = () => import('@/pages/mineRepair/MineRepair')
 const MineBook = () => import('@/pages/mineBook/MineBook')
-
+const RepairDetail = () => import('@/pages/repairDetail/RepairDetail')
 Vue.use(Router)
 
 export default new Router({
@@ -212,7 +212,16 @@ export default new Router({
         requireLogin: true
       },
       component: MineBook
-    }
+    },
+    {
+      path: '/repairDetail/:rid',
+      name: 'repairDetail',
+      meta: {
+        title: '报修详情',
+        requireLogin: true
+      },
+      component: RepairDetail
+    },
   ]
 })
 

@@ -32,4 +32,6 @@ export default {
   advice: '/feedback/create',               //投诉建议 user_id:用户ID,timeliness:时效,manner:服务态度,satisfaction:满意度,other:其他建议
   userInfo: '/user/index',               //投诉建议 user_id:用户ID
   mineRepair: '/user/repair-list',               //我的报修 user_id:用户ID
+  mineBook: '/user/booking-list',               //我的预约 user_id:用户ID
+  repairDetail: '/repair/view',             //报修详情，params:repair_id
 }

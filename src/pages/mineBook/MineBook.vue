@@ -2,14 +2,18 @@
 	<div class="container">
     <div class="section">
       <div class="section-hd">
-        <h3>新闻列表</h3>
+        <h3>预约列表</h3>
       </div>
       <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section4-bd">
         <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
-          <div class="section4-item" v-for="(item, index) in newsList" :key="index" @click="goNewsDetail(item)">
-            <h3 class="text-overflow">{{item.title}}</h3>
-            <p class="font-grey text-overflow-2"><span>{{item.intro}}</span></p>
+          <div class="section4-item" v-for="(item, index) in bookList" :key="index" @click="goBookDetail(item)">
+            <h3 class="text-overflow">{{item.park_name}} -- {{item.area_name}}</h3>
+            <p class="font-grey text-overflow-2"><span>预约人：{{item.name}}</span></p>
+            <p class="font-grey text-overflow-2"><span>预约人数：{{item.people_number}}</span></p>
+            <p class="font-grey text-overflow-2"><span>联系方式：{{item.contact}}</span></p>
+            <p class="font-grey text-overflow-2"><span>预约时间：{{item.date}}</span></p>
+            <p class="font-grey text-overflow-2"><span>预约用途：{{item.purpose}}</span></p>
             <p class="font-grey"><img class="item-img__time" src="../../assets/images/icon-time.png" alt="查看详情"> {{item.created_at | formateTime}}</p>
           </div>
         </mt-loadmore>
@@ -66,10 +70,10 @@ export default {
   data() {
     return {
       page: 1,
-      pageSize: 8,
+      pageSize: 5,
       pageCount: 2,
       totalCount: 1,
-      newsList: [],
+      bookList: [],
       allLoaded: false,
       bottomPullText: '上拉加载更多...',
       bottomDropText: '释放更新数据...',
@@ -77,23 +81,25 @@ export default {
     };
   },
   created() {
-    this.getNewsList()
+    this.getBookList()
   },
   mounted() {
     
   },
   methods: {
     //获取新闻列表
-    getNewsList: function(){
+    getBookList: function(){
       let that = this
+      let user_id = localStorage.getItem('user_id')
       let params = {
+        user_id: user_id,
         page: this.page,
         pageSize: this.pageSize
       }
-      this.$http.get(api.newsList,{params: params}).then(res => {
+      this.$http.get(api.mineBook,{params: params}).then(res => {
         that.pageCount = res._meta.pageCount
         that.totalCount = res._meta.totalCount
-        that.newsList = that.newsList.concat(res.data)
+        that.bookList = that.bookList.concat(res.data)
       })
     },
     loadBottom() {
@@ -103,21 +109,21 @@ export default {
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
         }
-        that.getNewsList()
+        that.getBookList()
         that.$refs.loadmore.onBottomLoaded();
       }, 50)
     },
     handleBottomChange: function(status){
       //console.log(status)
     },
-    goNewsDetail: function(item){
-      // 去往新闻详情页面
-      this.$router.push({
-        name: "newsDetail",
-        params: {
-          nid: item.news_id
-        }
-      })
+    goBookDetail: function(item){
+      // 去往预约详情页面
+      // this.$router.push({
+      //   name: "bookDetail",
+      //   params: {
+      //     nid: item.book_id
+      //   }
+      // })
     }
   },
   filters: {

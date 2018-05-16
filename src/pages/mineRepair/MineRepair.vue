@@ -138,7 +138,7 @@ export default {
       this.$router.push({
         name: "repairDetail",
         params: {
-          nid: item.repair_id
+          rid: item.repair_id
         }
       })
     }

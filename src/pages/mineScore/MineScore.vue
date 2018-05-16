@@ -6,7 +6,7 @@
 				<mt-tab-item id="2">工作人员评分</mt-tab-item>
 			</mt-navbar>
 		</div>
-		<mt-tab-container v-model="selected">
+		<mt-tab-container class="tab-container" v-model="selected">
       <mt-tab-container-item id="1">
 				<div class="no-data" v-if="totalCount1 == 0">-- 暂无数据 --</div>
 				<mt-loadmore :bottom-method="loadBottom1" :bottom-all-loaded="allLoaded1" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" ref="loadmore1">
@@ -42,6 +42,9 @@
 .nav{
 	width: 100%;
 	margin-bottom: 0.09rem;
+}
+.tab-container{
+	top: 1.3333rem;
 }
 .item{
 	width: 100%;

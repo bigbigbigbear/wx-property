@@ -26,8 +26,8 @@ export default {
   rentList: '/zu/list',                 //招租列表 
   rentDetail: '/zu/view',               //招租详情，params:zu_id 
 
-  parkScoreList: '/park-score-list',               //园区评分列表 page,pageSize,user_id
-  employeeScoreList: '/employee-score-list',               //工作人员评分列表 page,pageSize,user_id
+  parkScoreList: '/user/park-score-list',               //园区评分列表 page,pageSize,user_id
+  employeeScoreList: '/user/employee-score-list',               //工作人员评分列表 page,pageSize,user_id
 
   advice: '/feedback/create',               //投诉建议 user_id:用户ID,timeliness:时效,manner:服务态度,satisfaction:满意度,other:其他建议
   userInfo: '/user/index',               //投诉建议 user_id:用户ID

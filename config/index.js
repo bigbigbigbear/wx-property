@@ -20,7 +20,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    host: '192.168.123.195', // can be overwritten by process.env.HOST
     port: 8088, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     disableHostCheck: true,
     autoOpenBrowser: true,          //开发环境运行时是否打开浏览器

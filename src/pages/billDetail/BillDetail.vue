@@ -2,30 +2,74 @@
 	<div class="container">
 		<div class="section">
 			<div class="section-hd">
-				<h3>{{billInfo.time}}账单详情</h3>
+				<h3>{{billInfo.title}}详情</h3>
 			</div>
 			<div class="section-bd">
 				<div class="item">
-					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.total}}</span></div>
+					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.amount}}</span></div>
 					<div class="item-r">
 						
 					</div>
 				</div>
 				<div class="item">
-					<div class="item-l">电费{{billInfo.electric_unit}}度：{{billInfo.electric_fee}}</div>
-					<div class="item-r">用电损耗6%：{{billInfo.electric_loss}}</div>
+					<div class="item-l">租金：{{billInfo.data.current.zu}}</div>
+					<div class="item-r">垃圾费：{{billInfo.data.current.laji}}</div>
 				</div>
 				<div class="item">
-					<div class="item-l">用电管理费：{{billInfo.electric_manage}}</div>
-					<div class="item-r">水费{{billInfo.water_unit}}度：{{billInfo.water_fee}}</div>
-				</div>
-				<div class="item">
-					<div class="item-l">电梯费：{{billInfo.elevator_fee}}</div>
-					<div class="item-r">水损耗16%：{{billInfo.water_fee}}</div>
+					<div class="item-l">管理费：{{billInfo.data.current.guanli}}</div>
+					<div class="item-r">基本电费：{{billInfo.data.current.dianfei}}</div>
 				</div>
         <div class="item">
-					<div class="item-l">垃圾费：{{billInfo.rubbish_fee}}</div>
-					<div class="item-r">保安费：{{billInfo.security_fee}}</div>
+					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.current.total}}</span></div>
+					<div class="item-r">
+						
+					</div>
+				</div>
+				<div class="item">
+					<div class="item-l">电费：{{billInfo.data.prev.dianfei}}</div>
+					<div class="item-r">{{billInfo.data.prev.dian_sunhao_title}}：{{billInfo.data.prev.dian_sunhao}}</div>
+				</div>
+				<div class="item">
+					<div class="item-l">公共用电分摊：{{billInfo.data.prev.dian_fentan}}</div>
+					<div class="item-r">{{billInfo.data.prev.shuifei_title}}：{{billInfo.data.prev.shuifei}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">{{billInfo.data.prev.shui_sunhao_title}}：{{billInfo.data.prev.shui_sunhao}}</div>
+					<div class="item-r">公共用水分摊：{{billInfo.data.prev.shui_fentan}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.prev.total}}</span></div>
+					<div class="item-r">
+						
+					</div>
+				</div>
+        <div class="item">
+					<div class="item-l">本月电表：</div>
+					<div class="item-r">{{billInfo.data.dian.current.feng}}/{{billInfo.data.dian.current.ping}}/{{billInfo.data.dian.current.gu}}</div>
+				</div>
+				<div class="item">
+					<div class="item-l">上月电表：</div>
+					<div class="item-r">{{billInfo.data.dian.prev.feng}}/{{billInfo.data.dian.prev.ping}}/{{billInfo.data.dian.prev.gu}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">实际用电：</div>
+					<div class="item-r">{{billInfo.data.dian.shiji.feng}}/{{billInfo.data.dian.shiji.ping}}/{{billInfo.data.dian.shiji.gu}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">电量负感倍数：{{billInfo.data.dian.beishu}}</div>
+					<div class="item-r">本月用水：{{billInfo.data.shui.current}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">上月用水：{{billInfo.data.shui.prev}}</div>
+					<div class="item-r">实际用水：{{billInfo.data.shui.shiji}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">制表人：{{billInfo.data.make.maker}}</div>
+					<div class="item-r">日期：{{billInfo.data.make.zhibiao_date}}</div>
+				</div>
+        <div class="item">
+					<div class="item-l">联系电话：{{billInfo.data.make.tel}}</div>
+					<div class="item-r"></div>
 				</div>
 			</div>
 		</div>
@@ -68,31 +112,30 @@
 }
 </style>
 <script type="text/babel">
+import api from '../../server/api'
 export default {
   components: {},
   data() {
     return {
-      billInfo: {
-        id: 1,
-        time: '2018-04',
-        total: 30000,
-        electric_fee: 999,
-        electric_unit: 1.2,
-        electric_loss: 66,
-        electric_manage: 99,
-        water_fee: 100,
-        water_unit: 6,
-        water_loss: 8,
-        elevator_fee: 1000,
-        rubbish_fee: 90,
-        security_fee: 50
-      }
+      billInfo: {}
     };
   },
   computed: {},
-  created() {},
+  created() {
+    this.getCurrentbill()
+  },
   mounted() {},
   methods: {
+    getCurrentbill: function(){
+      let that = this
+      let bid = this.$route.params.bid
+			let params = {
+				bill_id: bid
+			}
+			this.$http.get(api.billDetail,{params: params}).then(res => {
+        that.billInfo = res.data
+      })
+		}
   }
 };
 </script>

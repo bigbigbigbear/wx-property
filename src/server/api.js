@@ -35,4 +35,6 @@ export default {
   mineRepair: '/user/repair-list',               //我的报修 user_id:用户ID
   mineBook: '/user/booking-list',               //我的预约 user_id:用户ID
   repairDetail: '/repair/view',             //报修详情，params:repair_id
+  mineBill: '/bill/list',               //我的报修 user_id:用户ID
+  billDetail: '/bill/view',             //报修详情，params:bill_id
 }

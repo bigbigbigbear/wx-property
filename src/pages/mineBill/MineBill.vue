@@ -22,10 +22,13 @@
 				</div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div class="item" v-for="(item, index) in list2" :key="index">
-					<div><span>{{item.time}}账单</span><br><span class="font-orange">租金：{{item.rent_price}}元</span></div>
-					<div><span class="btn btn-medium" @click="checkBill(item.id)">查看账单</span></div>
-				</div>
+				<div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
+				<mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" ref="loadmore">
+					<div class="item" v-for="(item, index) in billList" :key="index">
+						<div><span>{{item.title}}</span><br><span class="font-orange">租金：{{item.amount}}元</span></div>
+						<div><span class="btn btn-medium" @click="checkBill(item.bill_id)">查看账单</span></div>
+					</div>
+				</mt-loadmore>
       </mt-tab-container-item>
     </mt-tab-container>
 	</div>
@@ -73,7 +76,8 @@
 }
 </style>
 <script type="text/babel">
-
+import api from '../../server/api'
+import { formateDate } from '../../utils/utils'
 export default {
 	components: {
 		
@@ -81,44 +85,64 @@ export default {
 	data() {
 		return {
 			selected: '1',
-			billInfo: {
-				id: 1,
-				start_date: '2018-08-01',
-				end_date: '2018-09-01',
-				rent_price: 10000,
-				overdue_date: '2018-12-01',
-			},
-			list2: [
-				{
-					id: 1,
-					rent_price: 10000,
-					time: '2018-04'
-				},
-				{
-					id: 2,
-					rent_price: 10000,
-					time: '2018-04'
-				},
-				{
-					id: 3,
-					rent_price: 10000,
-					time: '2018-04'
-				},
-				{
-					id: 4,
-					rent_price: 10000,
-					time: '2018-04'
-				}
-			]
+			billInfo: {},
+			billList: [],
+			page: 1,
+      pageSize: 8,
+			pageCount: 2,
+			totalCount: 1,
+			allLoaded: false,
+      bottomPullText: '上拉加载更多...',
+      bottomDropText: '释放更新数据...',
+      bottomLoadingText: '正在努力加载...'
 		}
 	},
 	created() {
-
+		this.getCurrentbill()
+		this.getBillList()
 	},
 	mounted() {
     
 	},
 	methods: {
+		getCurrentbill: function(){
+			let that = this
+			let m = new Date().getMonth()
+			m = m + 1
+			console.log(m);
+			let params = {
+				current_month: m
+			}
+			this.$http.get(api.billDetail,{params: params}).then(res => {
+        that.billInfo = res.data
+      })
+		},
+		//获取账单列表
+    getBillList: function(){
+			let that = this
+			let user_id = localStorage.getItem('user_id')
+      let params = {
+        page: this.page,
+				pageSize: this.pageSize,
+				user_id: user_id
+      }
+      this.$http.get(api.mineBill,{params: params}).then(res => {
+        that.pageCount = res._meta.pageCount
+        that.totalCount = res._meta.totalCount
+        that.billList = that.billList.concat(res.data)
+      })
+		},
+		loadBottom() {
+      let that = this
+      setTimeout(() => {
+        that.page += 1
+        if(that.page > that.pageCount){
+          that.allLoaded = true;// 若数据已全部获取完毕
+				}
+				that.getBillList()
+        that.$refs.loadmore.onBottomLoaded();
+      }, 50)
+		},
 		checkBill: function(id){
 			this.$router.push({
 				name: 'billDetail',

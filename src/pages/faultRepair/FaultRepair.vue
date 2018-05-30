@@ -8,7 +8,7 @@
 				<div class="item">
 					<div class="item-upload" @click.stop="addPic(1)" ref="imgUpload">
             <img :src="imgUrl1" alt="">
-            <input type="file" accept="image/jpg,image/png,image/jpeg,image/gif" capture="camera" @change="onFileChange" style="display: none;">
+            <input type="file" accept="image/*" capture="camera" @change="onFileChange" style="display: none;">
           </div>
 					<div class="item-upload" @click.stop="addPic(2)">
             <img :src="imgUrl2" alt="">

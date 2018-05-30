@@ -8,7 +8,7 @@
 export default {
   name: 'App',
   created() {
-    this.$wechatAuth.authorize()
+    // this.$wechatAuth.authorize()
   }
 }
 </script>

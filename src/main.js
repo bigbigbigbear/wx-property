@@ -92,21 +92,21 @@ new Vue({
     App
   },
   template: '<App/>',
-  wechatAuth: new VWechatAuth({
-    appId: 'wx2ad4b79558eb24ef',
-    scope: 'snsapi_userinfo',
-    authorize(code, success, fail) {
-      return server.get(api.code, {
-          params:{
-            code: code
-          }
-        })
-        .then(function (res) {
-					localStorage.setItem('user_token',res.data.user_token)
-					localStorage.setItem('user_id',res.data.user_id)
-          var data = (res && res.data) || {} // response data should at least contain openid
-          return data
-        })
-    }
-  })
+  // wechatAuth: new VWechatAuth({
+  //   appId: 'wx2ad4b79558eb24ef',
+  //   scope: 'snsapi_userinfo',
+  //   authorize(code, success, fail) {
+  //     return server.get(api.code, {
+  //         params:{
+  //           code: code
+  //         }
+  //       })
+  //       .then(function (res) {
+	// 				localStorage.setItem('user_token',res.data.user_token)
+	// 				localStorage.setItem('user_id',res.data.user_id)
+  //         var data = (res && res.data) || {} // response data should at least contain openid
+  //         return data
+  //       })
+  //   }
+  // })
 })

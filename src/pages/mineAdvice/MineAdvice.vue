@@ -38,7 +38,7 @@
 				<div class="item">
 					<div class="item-label">其他建议：</div>
 					<div class="item-control">
-						<textarea v-model="otherAdvice" placeholder="请输入内容"></textarea>
+						<textarea v-model="otherAdvice" :placeholder="placeholder"></textarea>
 					</div>
 				</div>
 				<div class="item-btn">
@@ -136,7 +136,8 @@ export default {
     return {
 			showList1: false,
 			showList2: false,
-			showList3: false,
+      showList3: false,
+      placeholder: "请输入您的建议，若选择'非常满意'或者'不满意'，字数不少于20",
       timeEff: '非常满意',
 			serviceAtt: '非常满意',
 			satisfy: '非常满意',
@@ -276,6 +277,12 @@ export default {
     },
     // 提交
     submit: function() {
+      if(this.timeEff === '非常满意' || this.timeEff === '不满意' || this.serviceAtt === '非常满意' || this.serviceAtt === '不满意' || this.satisfy === '非常满意' || this.satisfy === '不满意' && this.otherAdvice.length < 20){
+        Toast({
+					message: '字数不能少于20！'
+        })
+        return false
+      }
       let vm = this
 			let user_id = localStorage.getItem('user_id')
       let params = {

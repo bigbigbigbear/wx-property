@@ -228,7 +228,6 @@ export default {
   },
   mounted() {
     // this.login()
-    this.$wechatAuth.authorize()
     this.getIndexInfo()
     this.getParkList()
     this.getRentList()

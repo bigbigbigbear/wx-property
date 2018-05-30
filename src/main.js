@@ -42,7 +42,7 @@ Vue.component(Loadmore.name, Loadmore);
 Vue.config.productionTip = false
 
 // 路由拦截
-// router.beforeEach((to, from, next) => {
+//router.beforeEach((to, from, next) => {
 //   if (store.state.loginStatus == 0) {
 //       console.log('status0')
 //       //微信未授权登录跳转到授权登录页面
@@ -96,8 +96,10 @@ new Vue({
     appId: 'wx2ad4b79558eb24ef',
     scope: 'snsapi_userinfo',
     authorize(code, success, fail) {
-      return server.post(api.code, {
-          code: code
+      return server.get(api.code, {
+          params:{
+            code: code
+          }
         })
         .then(function (res) {
 					localStorage.setItem('user_token',res.data.user_token)

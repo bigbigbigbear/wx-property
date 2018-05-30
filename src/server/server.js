@@ -4,7 +4,7 @@ import { Toast } from 'mint-ui';
 import { baseUrl } from './env'
 import router from "../router";
 
-const Axios = axios.create({
+const server = axios.create({
   baseURL: baseUrl, // 因为我本地做了反向代理
   timeout: 7000,
   responseType: "json",
@@ -15,7 +15,7 @@ const Axios = axios.create({
 });
 
 //POST传参序列化(添加请求拦截器)
-Axios.interceptors.request.use(
+server.interceptors.request.use(
   config => {
     // 在发送请求之前做某件事
     if (
@@ -42,7 +42,7 @@ Axios.interceptors.request.use(
 );
 
 //返回状态判断(添加响应拦截器)
-Axios.interceptors.response.use(
+server.interceptors.response.use(
   res => {
     if(res.status === 200){
       if(res.data.err_code === 0){
@@ -63,8 +63,6 @@ Axios.interceptors.response.use(
 );
 
 // 对axios的实例重新封装成一个plugin ,方便 Vue.use(xxxx)
-export default {
-  install: function(Vue, Option) {
-    Object.defineProperty(Vue.prototype, "$http", { value: Axios });
-  }
+export {
+  server
 };

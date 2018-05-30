@@ -10,14 +10,14 @@
       <mt-tab-container-item id="1">
         <div class="section">
 					<div class="section-content">
-						<p>账单日期：{{billInfo.start_date}}至{{billInfo.end_date}}</p>
-						<p>租金金额：<span class="font-orange">{{billInfo.rent_price}}元</span></p>
+						<p>账单日期：{{billInfo.date_area}}</p>
+						<p>租金金额：<span class="font-orange">{{billInfo.amount}}元</span></p>
 					</div>
 					<div class="section-btn">
-						<span class="btn btn-large" @click="checkBill(billInfo.id)">查看账单</span>
+						<span class="btn btn-large" @click="checkBill(billInfo.bill_id)">查看账单</span>
 					</div>
 					<div class="section-tip">
-						<p>温馨提醒：请于{{billInfo.overdue_date}}将以上总费用汇到我们公司指定账户（户名：深圳市七星级科技有限公司；开户行：中国农业银行；账号：6228 1254 1245）,延迟交款将按合同约定收取滞纳金。</p>
+						<p>{{billInfo.tip}}</p>
 					</div>
 				</div>
       </mt-tab-container-item>
@@ -107,14 +107,12 @@ export default {
 	methods: {
 		getCurrentbill: function(){
 			let that = this
-			let m = new Date().getMonth()
-			m = m + 1
-			console.log(m);
+			let user_id = localStorage.getItem('user_id')
 			let params = {
-				current_month: m
+				user_id: user_id
 			}
-			this.$http.get(api.billDetail,{params: params}).then(res => {
-        that.billInfo = res.data
+			this.$http.get(api.currentBill,{params: params}).then(res => {
+        that.billInfo = res.data[0]
       })
 		},
 		//获取账单列表

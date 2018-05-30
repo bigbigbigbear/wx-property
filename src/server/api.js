@@ -7,7 +7,7 @@ export default {
   login: '/user/login',                 //注册   openid:微信openid  ，nickname:昵称，avatar:头像，gender:性别，province:省份，city:城市，mobile:手机号码
   index: '/index',                      //首页信息
   about: '/about',                      //公司信息
-  code: '/user/code',                   //获取用户信息
+  code: '/user/code',                   //获取用户信息 code
 
   parkList: '/park/list',               //园区列表 page,pageSize
   parkDetail: '/park/view',             //园区详情，params:park_id 
@@ -35,6 +35,7 @@ export default {
   mineRepair: '/user/repair-list',               //我的报修 user_id:用户ID
   mineBook: '/user/booking-list',               //我的预约 user_id:用户ID
   repairDetail: '/repair/view',             //报修详情，params:repair_id
-  mineBill: '/bill/list',               //我的报修 user_id:用户ID
-  billDetail: '/bill/view',             //报修详情，params:bill_id
+  mineBill: '/bill/list',               //我的账单 user_id:用户ID
+  currentBill: '/bill/current',               //当前账单 user_id:用户ID
+  billDetail: '/bill/view',             //账单详情，params:bill_id
 }

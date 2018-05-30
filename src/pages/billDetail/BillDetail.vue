@@ -71,20 +71,17 @@
 					<div class="item-l">联系电话：{{billInfo.data.make.tel}}</div>
 					<div class="item-r"></div>
 				</div>
+				<div class="section-tip">
+					<p>{{billInfo.tip}}</p>
+				</div>
+				<div class="divider"></div>
 			</div>
 		</div>
 	</div>
 </template>
 <style scoped>
-.container::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+.container {
   background-color: #fff;
-  z-index: -100;
 }
 .section-hd {
   width: 100%;
@@ -109,6 +106,15 @@
 }
 .item-l, .item-r {
   flex: 1;
+}
+.section-tip{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.2667rem;
+	margin-top: 0.4rem;
+	line-height: 1.8;
+	background-color: #f5f5f5;
+	color: #666;
 }
 </style>
 <script type="text/babel">

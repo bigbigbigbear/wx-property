@@ -6,10 +6,8 @@
 			</div>
 			<div class="section-bd">
 				<div class="item">
-					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.amount}}</span></div>
-					<div class="item-r">
-						
-					</div>
+					<div class="item-l">{{billInfo.data.current.month}}月</div>
+					<div class="item-r"></div>
 				</div>
 				<div class="item">
 					<div class="item-l">租金：{{billInfo.data.current.zu}}</div>
@@ -24,6 +22,10 @@
 					<div class="item-r">
 						
 					</div>
+				</div>
+				<div class="item">
+					<div class="item-l">{{billInfo.data.prev.month}}月</div>
+					<div class="item-r"></div>
 				</div>
 				<div class="item">
 					<div class="item-l">电费：{{billInfo.data.prev.dianfei}}</div>
@@ -63,16 +65,22 @@
 					<div class="item-l">上月用水：{{billInfo.data.shui.prev}}</div>
 					<div class="item-r">实际用水：{{billInfo.data.shui.shiji}}</div>
 				</div>
-        <div class="item">
-					<div class="item-l">制表人：{{billInfo.data.make.maker}}</div>
+				<div class="item">
+					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.amount}}</span></div>
+					<div class="item-r">
+						
+					</div>
+				</div>
+				<div class="section-tip">
+					<p>{{billInfo.tip}}</p>
+				</div>
+				<div class="item">
+					<div class="item-l">制表人：{{billInfo.data.make.marker}}</div>
 					<div class="item-r">日期：{{billInfo.data.make.zhibiao_date}}</div>
 				</div>
         <div class="item">
 					<div class="item-l">联系电话：{{billInfo.data.make.tel}}</div>
 					<div class="item-r"></div>
-				</div>
-				<div class="section-tip">
-					<p>{{billInfo.tip}}</p>
 				</div>
 				<div class="divider"></div>
 			</div>

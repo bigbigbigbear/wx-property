@@ -8,7 +8,8 @@
 		</div>
 		<mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <div class="section">
+				<div class="no-data" v-if="billInfo == null">-- 暂无数据 --</div>
+        <div class="section" v-else>
 					<div class="section-content">
 						<p>账单日期：{{billInfo.date_area}}</p>
 						<p>租金金额：<span class="font-orange">{{billInfo.amount}}元</span></p>
@@ -85,7 +86,7 @@ export default {
 	data() {
 		return {
 			selected: '1',
-			billInfo: {},
+			billInfo: null,
 			billList: [],
 			page: 1,
       pageSize: 8,
@@ -112,7 +113,11 @@ export default {
 				user_id: user_id
 			}
 			this.$http.get(api.currentBill,{params: params}).then(res => {
-        that.billInfo = res.data[0]
+				if(res.data.length > 0){
+					that.billInfo = res.data[0]
+				}else {
+					that.billInfo = null
+				}
       })
 		},
 		//获取账单列表

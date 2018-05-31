@@ -39,12 +39,12 @@
 					<div class="item-l">{{billInfo.data.prev.shui_sunhao_title}}：{{billInfo.data.prev.shui_sunhao}}</div>
 					<div class="item-r">公共用水分摊：{{billInfo.data.prev.shui_fentan}}</div>
 				</div>
-        <div class="item">
+        <!-- <div class="item">
 					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.prev.total}}</span></div>
 					<div class="item-r">
 						
 					</div>
-				</div>
+				</div> -->
         <div class="item">
 					<div class="item-l">本月电表：</div>
 					<div class="item-r">{{billInfo.data.dian.current.feng}}/{{billInfo.data.dian.current.ping}}/{{billInfo.data.dian.current.gu}}</div>

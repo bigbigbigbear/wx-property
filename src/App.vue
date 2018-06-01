@@ -8,7 +8,7 @@
 export default {
   name: 'App',
   created() {
-    this.$wechatAuth.authorize()
+    // localStorage.setItem('renter',0)
   }
 }
 </script>

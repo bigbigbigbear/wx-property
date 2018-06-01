@@ -4,8 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axiosPlugin from "./server"
-// import store from './store'
 import {
+  Toast,
   Navbar,
   Tabbar,
   TabItem,
@@ -23,12 +23,9 @@ import {
   server
 } from './server/server'
 import api from './server/api'
-// import wechatAuth from './utils/wechatAuth' //微信登录插件
-// const queryString = require('query-string')
 
 Vue.use(axiosPlugin)
 Vue.use(VWechatAuth)
-// Vue.use(wechatAuth, {appid: 'wx2ad4b79558eb24ef'})
 Vue.component(Navbar.name, Navbar);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
@@ -42,52 +39,29 @@ Vue.component(Loadmore.name, Loadmore);
 Vue.config.productionTip = false
 
 // 路由拦截
-//router.beforeEach((to, from, next) => {
-//   if (store.state.loginStatus == 0) {
-//       console.log('status0')
-//       //微信未授权登录跳转到授权登录页面
-//       let url = window.location.href;
-//       //解决重复登录url添加重复的code与state问题
-//       let parseUrl = queryString.parse(url.split('?')[1]);
-//       let loginUrl;
-//       if (parseUrl.code && parseUrl.state) {
-//           delete parseUrl.code;
-//           delete parseUrl.state;
-//           loginUrl = `${url.split('?')[0]}?${queryString.stringify(parseUrl)}`;
-//       } else {
-//           loginUrl = url;
-//       }
-//       wechatAuth.redirect_uri = loginUrl;
-//       store.dispatch('setLoginStatus', 1);
-//       window.location.href = wechatAuth.authUrl
-//   } else if (store.state.loginStatus == 1) {
-//     console.log('status1')
-//       try {
-//           wechatAuth.returnFromWechat(to.fullPath);
-//       } catch (err) {
-//           store.dispatch('setLoginStatus', 0)
-//           next()
-//       }
-//       store.dispatch('loginWechatAuth', wechatAuth.code).then((res) => {
-//           if (res.err_code === 0) {
-//               store.dispatch('setLoginStatus', 2)
-//           } else {
-//               store.dispatch('setLoginStatus', 0)
-//           }
-//           next()
-//       }).catch((err) => {
-//           next()
-//       })
-//   } else {
-//       next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  console.log(to,from)
+  if (to.matched.some(record => record.meta.requireLogin)) {
+    let renter = parseInt(localStorage.getItem('renter'))
+    if (renter === 0) {
+      Toast({
+        message: '只有业主才能操作哦~'
+      })
+      next({
+        path: from.path
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  //   store,
   components: {
     App
   },
@@ -102,9 +76,10 @@ new Vue({
           }
         })
         .then(function (res) {
+          localStorage.setItem('renter',res.data.renter)
 					localStorage.setItem('user_token',res.data.user_token)
 					localStorage.setItem('user_id',res.data.user_id)
-          var data = (res && res.data) || {} // response data should at least contain openid
+          var data = (res && res.data) || {}
           return data
         })
     }

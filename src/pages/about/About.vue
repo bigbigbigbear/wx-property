@@ -4,7 +4,7 @@
 			<div class="section-hd text-overflow bbottom">
 				<h3>关于我们</h3>
 			</div>
-			<div class="section-hd" v-html="companyInfo"></div>
+			<div class="section-bd" v-html="companyInfo"></div>
 		</div>
 	</div>
 </template>
@@ -17,6 +17,10 @@
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0.2667rem;
+}
+.section-bd {
+	line-height: 1.8;
+	font-size: 13px;
 }
 </style>
 <script type="text/babel">

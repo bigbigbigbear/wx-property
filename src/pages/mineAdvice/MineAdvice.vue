@@ -23,7 +23,7 @@
 						<input class="item-select" type="text" @focus="showList3 = true" readonly :value="satisfy">
 					</div>
 				</div>
-				<div class="item">
+				<!-- <div class="item">
 					<div class="item-upload" @click.stop="addPic(1)" ref="imgUpload">
             <img :src="imgUrl1" alt="">
             <input type="file" accept="image/*" capture="camera" @change="onFileChange" style="display: none;">
@@ -34,7 +34,7 @@
 					<div class="item-upload" @click.stop="addPic(3)">
             <img :src="imgUrl3" alt="">
           </div>
-				</div>
+				</div> -->
 				<div class="item">
 					<div class="item-label">其他建议：</div>
 					<div class="item-control">
@@ -213,14 +213,14 @@ export default {
           textAlign: "center"
         }
       ],
-      type: 1,
-      imgUrl1: imgUpload,
-      imgUrl2: imgUpload,
-      imgUrl3: imgUpload,
-      image1: '',
-      image2: '',
-      image3: '',
-      imgUrls: [],
+      // type: 1,
+      // imgUrl1: imgUpload,
+      // imgUrl2: imgUpload,
+      // imgUrl3: imgUpload,
+      // image1: '',
+      // image2: '',
+      // image3: '',
+      // imgUrls: [],
       otherAdvice: ""
     };
   },
@@ -241,49 +241,49 @@ export default {
       this.showList3 = false;
     },
     // 添加图片
-    addPic: function (type) {
-      let els = this.$refs.imgUpload.querySelectorAll('input[type=file]')
-      els[0].click()
-      this.type = type
-      return false
-    },
-    // 上传图片
-    onFileChange: function (e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files, e);
-    },
-    // 图片压缩转化
-    createImage: function (file, e) {
-      let vm = this;
-      lrz(file[0], {
-        width: 480
-      }).then(function (rst) {
-        switch(vm.type){
-          case 1:
-            vm.image1 = rst.base64
-            vm.imgUrl1 = rst.base64
-            break;
-          case 2:
-            vm.image2 = rst.base64
-            vm.imgUrl2 = rst.base64
-            break;
-          case 3:
-            vm.image3 = rst.base64
-            vm.imgUrl3 = rst.base64
-            break;
-          default: 
-            break;
-        }
-        return rst;
-      }).always(function () {
-        // 清空文件上传控件的值
-        e.target.value = null;
-      });
-    },
+    // addPic: function (type) {
+    //   let els = this.$refs.imgUpload.querySelectorAll('input[type=file]')
+    //   els[0].click()
+    //   this.type = type
+    //   return false
+    // },
+    // // 上传图片
+    // onFileChange: function (e) {
+    //   var files = e.target.files || e.dataTransfer.files;
+    //   if (!files.length) return;
+    //   this.createImage(files, e);
+    // },
+    // // 图片压缩转化
+    // createImage: function (file, e) {
+    //   let vm = this;
+    //   lrz(file[0], {
+    //     width: 480
+    //   }).then(function (rst) {
+    //     switch(vm.type){
+    //       case 1:
+    //         vm.image1 = rst.base64
+    //         vm.imgUrl1 = rst.base64
+    //         break;
+    //       case 2:
+    //         vm.image2 = rst.base64
+    //         vm.imgUrl2 = rst.base64
+    //         break;
+    //       case 3:
+    //         vm.image3 = rst.base64
+    //         vm.imgUrl3 = rst.base64
+    //         break;
+    //       default: 
+    //         break;
+    //     }
+    //     return rst;
+    //   }).always(function () {
+    //     // 清空文件上传控件的值
+    //     e.target.value = null;
+    //   });
+    // },
     // 提交
     submit: function() {
-      if(this.timeEff === '非常满意' || this.timeEff === '不满意' || this.serviceAtt === '非常满意' || this.serviceAtt === '不满意' || this.satisfy === '非常满意' || this.satisfy === '不满意' && this.otherAdvice.length < 20){
+      if((this.timeEff === '非常满意' || this.timeEff === '不满意' || this.serviceAtt === '非常满意' || this.serviceAtt === '不满意' || this.satisfy === '非常满意' || this.satisfy === '不满意') && this.otherAdvice.length < 20){
         Toast({
 					message: '字数不能少于20！'
         })
@@ -296,9 +296,9 @@ export default {
         timeliness: this.timeEff,
         manner: this.serviceAtt,
         satisfaction: this.satisfy,
-        image1: this.image1,
-        image2: this.image2,
-        image3: this.image3,
+        // image1: this.image1,
+        // image2: this.image2,
+        // image3: this.image3,
         other: this.otherAdvice
 			}
       this.$http.post(api.advice, params).then(res => {

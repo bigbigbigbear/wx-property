@@ -37,9 +37,9 @@
 					</div>
 				</div>
 				<div class="item">
-					<div class="item-label">备注内容：</div>
+					<div class="item-label">用途：</div>
 					<div class="item-control">
-						<textarea v-model="purpose" placeholder="请输入内容"></textarea>
+						<textarea v-model="purpose" placeholder="请输入用途"></textarea>
 					</div>
 				</div>
 				<div class="item-btn">
@@ -222,6 +222,10 @@ export default {
       }
       if(this.peopleNumber == ''){
 				Toast('预约人数不能为空~')
+				return false
+      }
+      if(this.purpose == ''){
+				Toast('用途不能为空~')
 				return false
 			}
       this.$http.post(api.deviceBook, params).then(res => {

@@ -64,7 +64,8 @@
 	width: 100%;
 	height: 8.4rem;
 	box-sizing: border-box;
-	padding: 0.5333rem 1.3333rem;
+	padding: 0.5333rem 1.3333rem 0;
+	margin-bottom: 0.2667rem;
 	overflow: hidden;
 }
 .item{

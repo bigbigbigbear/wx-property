@@ -56,8 +56,7 @@ export default new Router({
       path: '/home',
       name: 'home',
       meta: {
-        title: '首页',
-        requireLogin: true
+        title: '首页'
       },
       component: Home
     },
@@ -65,8 +64,7 @@ export default new Router({
       path: '/about',
       name: 'about',
       meta: {
-        title: '关于我们',
-        requireLogin: true
+        title: '关于我们'
       },
       component: About
     },
@@ -74,8 +72,7 @@ export default new Router({
       path: '/park',
       name: 'park',
       meta: {
-        title: '园区',
-        requireLogin: true
+        title: '园区'
       },
       component: Park
     },
@@ -83,8 +80,7 @@ export default new Router({
       path: '/parkDetail/:pid',
       name: 'parkDetail',
       meta: {
-        title: '园区详情',
-        requireLogin: true
+        title: '园区详情'
       },
       component: ParkDetail
     },
@@ -101,8 +97,7 @@ export default new Router({
       path: '/employeeList/:pid',
       name: 'employeeList',
       meta: {
-        title: '工作人员列表',
-        requireLogin: true
+        title: '工作人员列表'
       },
       component: EmployeeList
     },
@@ -137,8 +132,7 @@ export default new Router({
       path: '/rentList',
       name: 'rentList',
       meta: {
-        title: '招租列表',
-        requireLogin: true
+        title: '招租列表'
       },
       component: RentList
     },
@@ -146,8 +140,7 @@ export default new Router({
       path: '/rentDetail/:rid',
       name: 'rentDetail',
       meta: {
-        title: '招租详情',
-        requireLogin: true
+        title: '招租详情'
       },
       component: RentDetail
     },
@@ -155,8 +148,7 @@ export default new Router({
       path: '/newsList',
       name: 'newsList',
       meta: {
-        title: '新闻列表',
-        requireLogin: true
+        title: '新闻列表'
       },
       component: NewsList
     },
@@ -164,8 +156,7 @@ export default new Router({
       path: '/newsDetail/:nid',
       name: 'newsDetail',
       meta: {
-        title: '新闻详情',
-        requireLogin: true
+        title: '新闻详情'
       },
       component: NewsDetail
     },

@@ -49,6 +49,11 @@ export default {
 	mounted() {
     
 	},
+	watch: {
+   	'$route' (to, from) {
+			this.getNewsInfo()
+   	}
+ 	},
 	methods: {
 		//获取新闻详情
 		getNewsInfo: function(){

@@ -3,8 +3,8 @@
     <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
     <div class="section" v-else>
       <div class="section-bd">
-        <mt-loadmore class="section-item" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
-          <div v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <div class="section-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
             <div class="item-img">
               <img :src="item.image" :alt="item.name">
             </div>
@@ -27,18 +27,17 @@
 }
 .section-bd {
 	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
   box-sizing: border-box;
   padding: 0 0.2667rem 0.2667rem;
 }
 .section-item {
-  width: 50%;
+  display: inline-block;
+  width: calc((100% - 0.2667rem)/2);
   box-sizing: border-box;
   padding-top: 0.2667rem;
 }
 .section-item:nth-of-type(2n + 1) {
-  padding-right: 0.2667rem;
+  margin-right: 0.2667rem;
 }
 .item-img {
   width: 100%;

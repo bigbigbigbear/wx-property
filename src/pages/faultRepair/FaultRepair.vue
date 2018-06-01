@@ -89,6 +89,9 @@ export default {
       imgUrl2: imgUpload,
       imgUrl3: imgUpload,
       imgUrls: [],
+      image1: '',
+      image2: '',
+      image3: '',
       content: ""
     }
   },
@@ -123,12 +126,15 @@ export default {
       }).then(function (rst) {
         switch(vm.type){
           case 1:
+            vm.image1 = rst.base64
             vm.imgUrl1 = rst.base64
             break;
           case 2:
+            vm.image2 = rst.base64
             vm.imgUrl2 = rst.base64
             break;
           case 3:
+            vm.image3 = rst.base64
             vm.imgUrl3 = rst.base64
             break;
           default: 
@@ -147,9 +153,9 @@ export default {
 			let user_id = localStorage.getItem('user_id')
       let params = {
         user_id: user_id,
-        image1: this.imgUrl1,
-        image2: this.imgUrl2,
-        image3: this.imgUrl3,
+        image1: this.image1,
+        image2: this.image2,
+        image3: this.image3,
         content: this.content
 			}
       this.$http.post(api.faultRepair, params).then(res => {

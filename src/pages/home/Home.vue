@@ -224,14 +224,16 @@ export default {
     };
   },
   created() {
-    
-  },
-  mounted() {
-    this.getUserInfo()
     this.getIndexInfo()
     this.getParkList()
     this.getRentList()
     this.getNewsList()
+  },
+  mounted() {
+    let that = this
+    setTimeout(() => {
+      that.getUserInfo()
+    }, 1000)
   },
   methods: {
     //获取我的信息

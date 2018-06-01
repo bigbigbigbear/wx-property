@@ -8,7 +8,10 @@
 export default {
   name: 'App',
   created() {
-    this.$wechatAuth.authorize()
+    let user_id = localStorage.getItem('user_id')
+    if(!user_id){
+      this.$wechatAuth.authorize()
+    }
   }
 }
 </script>

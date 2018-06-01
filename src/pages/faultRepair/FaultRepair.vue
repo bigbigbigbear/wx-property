@@ -147,9 +147,9 @@ export default {
 			let user_id = localStorage.getItem('user_id')
       let params = {
         user_id: user_id,
-        image1: this.imgUrl1.split(',')[1],
-        image2: this.imgUrl2.split(',')[1],
-        image3: this.imgUrl3.split(',')[1],
+        image1: this.imgUrl1,
+        image2: this.imgUrl2,
+        image3: this.imgUrl3,
         content: this.content
 			}
       this.$http.post(api.faultRepair, params).then(res => {

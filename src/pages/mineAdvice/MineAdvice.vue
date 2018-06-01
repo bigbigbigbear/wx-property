@@ -290,9 +290,9 @@ export default {
         timeliness: this.timeEff,
         manner: this.serviceAtt,
         satisfaction: this.satisfy,
-        image1: this.imgUrl1.split(',')[1],
-        image2: this.imgUrl2.split(',')[1],
-        image3: this.imgUrl3.split(',')[1],
+        image1: this.imgUrl1,
+        image2: this.imgUrl2,
+        image3: this.imgUrl3,
         other: this.otherAdvice
 			}
       this.$http.post(api.advice, params).then(res => {

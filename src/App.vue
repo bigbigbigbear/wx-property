@@ -9,7 +9,7 @@ export default {
   name: 'App',
   created() {
     let user_id = localStorage.getItem('user_id')
-    if(!user_id){
+    if(typeof user_id === 'undefined' || user_id === null){
       this.$wechatAuth.authorize()
     }
   }

@@ -227,28 +227,23 @@ export default {
     
   },
   mounted() {
-    // this.login()
+    this.getUserInfo()
     this.getIndexInfo()
     this.getParkList()
     this.getRentList()
     this.getNewsList()
   },
   methods: {
-    login: function(){
-      let that = this
+    //获取我的信息
+    getUserInfo: function(){
+			let that = this
+			let user_id = localStorage.getItem('user_id')
       let params = {
-        openid: '111',
-        nickname: 'bear',
-        avatar: '',
-        gender: 'male',
-        province: '广东',
-        city: '深圳',
-        mobile: '13800000000'
-      }
-      this.$http.post(api.login, params).then(res => {
-        this.userInfo = res.data
-        localStorage.setItem('user_id',res.data.user_id)
-        localStorage.setItem('user_token',res.data.user_token)
+				user_id: user_id
+			}
+      this.$http.get(api.userInfo,{params: params}).then(res => {
+        // 1是业主 0是普通用户
+        localStorage.setItem('renter',res.data.renter)
       })
     },
     //获取首页信息

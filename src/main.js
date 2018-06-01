@@ -40,7 +40,6 @@ Vue.config.productionTip = false
 
 // 路由拦截
 router.beforeEach((to, from, next) => {
-  console.log(to,from)
   if (to.matched.some(record => record.meta.requireLogin)) {
     let renter = parseInt(localStorage.getItem('renter'))
     if (renter === 0) {

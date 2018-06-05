@@ -5,11 +5,11 @@
 				<div class="section-hd__img">
 					<img :src="parkInfo.image" :alt="parkInfo.name">
 				</div>
-				<div class="section-hd__info">
-					<h3>{{parkInfo.name}} <span class="font-orange">{{parkInfo.score}}分</span></h3>
-					<p class="section-hd__add text-overflow"><img class="icon" src="../../assets/images/icon-location.png" alt="地址"> 地址：{{parkInfo.address}}</p>
-					<p class="section-hd__tel text-overflow"><img class="icon" src="../../assets/images/icon-tel.png" alt="电话"> 电话：{{parkInfo.tel}}</p>
-				</div>
+			</div>
+			<div class="section-hd__info">
+				<h3>{{parkInfo.name}} <span class="font-orange">{{parkInfo.score}}分</span></h3>
+				<h3 class="section-hd__add text-overflow">地址：<span v-if="parkInfo.address === ''">无</span><span v-else>{{parkInfo.address}}</span></h3>
+				<h3 class="section-hd__tel text-overflow">电话：<span v-if="parkInfo.tel === ''">无</span><span v-else>{{parkInfo.tel}}</span></h3>
 			</div>
 			<div class="section1-bd">
 				<div class="section-title">
@@ -50,19 +50,10 @@
 	width: 100%;
 	height: 4.4rem;
 	overflow: hidden;
-	position: relative;
 }
 .section-hd__info{
-	width: 6rem;
-	height: 2.1333rem;
 	box-sizing: border-box;
 	padding: 0.2667rem;
-	background-color: rgba(0, 0, 0, .5);
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
-	color: #fff;
 }
 .section-hd__info p{
 	line-height: 1.6;

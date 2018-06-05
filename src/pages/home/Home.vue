@@ -139,7 +139,7 @@
 }
 .item-img {
   width: 100%;
-  height: 2.2667rem;
+  height: 3rem;
   overflow: hidden;
 }
 .item-title {
@@ -224,16 +224,14 @@ export default {
     };
   },
   created() {
+    this.getUserInfo()
     this.getIndexInfo()
     this.getParkList()
     this.getRentList()
     this.getNewsList()
   },
   mounted() {
-    let that = this
-    setTimeout(() => {
-      that.getUserInfo()
-    }, 1000)
+
   },
   methods: {
     //获取我的信息
@@ -244,6 +242,10 @@ export default {
 				user_id: user_id
 			}
       this.$http.get(api.userInfo,{params: params}).then(res => {
+        if(res.err_code === 401){
+          this.$wechatAuth.authorize()
+          return false
+        }
         // 1是业主 0是普通用户
         localStorage.setItem('renter',res.data.renter)
       })

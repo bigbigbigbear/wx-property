@@ -48,6 +48,7 @@ Axios.interceptors.response.use(
       if(res.data.err_code === 0){
         return res.data
       }else{
+        return res.data
         Toast({
           message: res.data.err_msg
         })

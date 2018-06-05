@@ -4,7 +4,7 @@
 			<div class="section-hd text-overflow bbottom">
 				<h3>{{newsInfo.title}}</h3>
 			</div>
-			<div class="section-hd" v-html="newsInfo.content"></div>
+			<div class="section-bd" v-html="newsInfo.content"></div>
 		</div>
 		<div class="section section-page">
 			<div class="section-item" @click="goOtherNews(prev.news_id)">
@@ -26,6 +26,9 @@
 	box-sizing: border-box;
 	padding: 0.2667rem;
 }
+.section-bd img{
+	height: auto !important;
+}
 .section-item{
 	padding: 0.2667rem 0;
 }
@@ -38,9 +41,22 @@ export default {
 	},
 	data() {
 		return {
-			newsInfo: {},
-			prev: {},
-			next: {}
+			newsInfo: {
+				content: '',
+				image: '',
+				intro: '',
+				news_id: '',
+				title: '',
+				view_num: ''
+			},
+			prev: {
+				news_id: '',
+				title: '无'
+			},
+			next: {
+				news_id: '',
+				title: '无'
+			}
 		}
 	},
 	created() {
@@ -63,9 +79,15 @@ export default {
         news_id: nid
       }
       this.$http.get(api.newsDetail,{params: params}).then(res => {
-				that.newsInfo = res.data.detail
-				that.prev = res.data.prev
-				that.next = res.data.next
+				if(res.data.detail !== null){
+					that.newsInfo = res.data.detail
+				}
+				if(res.data.prev !== null){
+					that.prev = res.data.prev
+				}
+				if(res.data.next !== null){
+					that.next = res.data.next
+				}
       })
 		},
 		//去看别的新闻

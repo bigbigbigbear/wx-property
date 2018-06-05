@@ -91,6 +91,10 @@ export default {
 				user_id: user_id
 			}
       this.$http.get(api.userInfo,{params: params}).then(res => {
+				if(res.err_code === 401){
+          this.$wechatAuth.authorize()
+          return
+        }
         that.userInfo = res.data
       })
     },

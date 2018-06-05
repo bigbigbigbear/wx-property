@@ -41,7 +41,7 @@
 }
 .item-img {
   width: 100%;
-  height: 2.2667rem;
+  height: 3rem;
   overflow: hidden;
 }
 .item-title {

@@ -48,7 +48,7 @@
 }
 .section-hd{
 	width: 100%;
-	height: 4.4rem;
+	height: 6.6667rem;
 	overflow: hidden;
 }
 .section-hd__info{

@@ -10,7 +10,7 @@
 				<p><span class="font-grey">所在楼层：</span>{{rentInfo.floor}}</p>
 				<p><span class="font-grey">新旧程度：</span>{{rentInfo.quality}}</p>
 				<p><span class="font-grey">厂房租金：</span><span class="font-orange">{{rentInfo.rent}}</span></p>
-				<p><span class="btn btn-large" @click="phoneCall(rentInfo.tel)"><img src="../../assets/images/icon-tel-1.png" alt="招租热线"> 招租热线： {{rentInfo.zu_tel}}</span></p>
+				<p><span class="btn btn-large" @click="phoneCall(rentInfo.tel)"><img src="../../assets/images/icon-tel-1.png" alt="招租热线"> 招租热线： {{rentInfo.tel}}</span></p>
 			</div>
 		</div>
 		<div class="section">

@@ -159,17 +159,19 @@ export default {
         content: this.content
 			}
       this.$http.post(api.faultRepair, params).then(res => {
-				Toast({
-					message: '提交成功！'
-        })
-        setTimeout(() => {
-          vm.$router.push({
-						name: 'parkDetail',
-						params: {
-							pid: pid
-						}
+        if(res.err_code === 0){
+          Toast({
+            message: '提交成功！'
           })
-        },1500)
+          setTimeout(() => {
+            vm.$router.push({
+              name: 'parkDetail',
+              params: {
+                pid: pid
+              }
+            })
+          },1500)
+        }
       })
 		}
 	}

@@ -302,14 +302,16 @@ export default {
         other: this.otherAdvice
 			}
       this.$http.post(api.advice, params).then(res => {
-				Toast({
-					message: '提交成功！'
-        })
-        setTimeout(() => {
-          vm.$router.push({
-            name: 'mine'
+        if(res.err_code === 0){
+          Toast({
+            message: '提交成功！'
           })
-        },1500)
+          setTimeout(() => {
+            vm.$router.push({
+              name: 'mine'
+            })
+          },1500)
+        }
       })
     }
   }

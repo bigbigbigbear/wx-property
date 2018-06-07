@@ -112,19 +112,20 @@ export default {
 				facilities: this.deviceScore
 			}
       this.$http.post(api.parkScore, params).then(res => {
-				Toast({
-					message: '评分成功！'
-				})
-				that.averScore = res.data
-				setTimeout(() => {
-					that.$router.push({
-						name: 'parkDetail',
-						params: {
-							pid: pid
-						}
+				if(res.err_code === 0){
+					Toast({
+						message: '评分成功！'
 					})
-				}, 1000)
-				
+					that.averScore = res.data
+					setTimeout(() => {
+						that.$router.push({
+							name: 'parkDetail',
+							params: {
+								pid: pid
+							}
+						})
+					}, 1000)
+				}
       })
 		},
 		// 获取环境评分

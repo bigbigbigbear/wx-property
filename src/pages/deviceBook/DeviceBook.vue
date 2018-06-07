@@ -229,12 +229,14 @@ export default {
 				return false
 			}
       this.$http.post(api.deviceBook, params).then(res => {
-				Toast({
-					message: '预约成功！'
-        })
-        this.bookName = ''
-        this.contact = ''
-        this.peopleNumber = ''
+        if(res.err_code === 0){
+          Toast({
+            message: '预约成功！'
+          })
+          this.bookName = ''
+          this.contact = ''
+          this.peopleNumber = ''
+        }
       })
     }
   }

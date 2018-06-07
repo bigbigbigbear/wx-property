@@ -190,22 +190,24 @@ export default {
 				return false
 			}
       this.$http.post(api.employeeScore, params).then(res => {
-				Toast({
-					message: '评分成功！'
-				})
-
-				that.employeeInfo.score = res.data
-				that.newScore = res.data
-				that.content = ''
-
-				setTimeout(() => {
-					that.$router.push({
-						name: 'employeeList',
-						params: {
-							pid: pid
-						}
+				if(res.err_code === 0){
+					Toast({
+						message: '评分成功！'
 					})
-				}, 1000)
+
+					that.employeeInfo.score = res.data
+					that.newScore = res.data
+					that.content = ''
+
+					setTimeout(() => {
+						that.$router.push({
+							name: 'employeeList',
+							params: {
+								pid: pid
+							}
+						})
+					}, 1000)
+				}
       })
 		},
 		//获取评分

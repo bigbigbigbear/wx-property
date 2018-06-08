@@ -5,68 +5,126 @@
 				<h3>{{billInfo.title}}详情</h3>
 			</div>
 			<div class="section-bd">
-				<div class="item">
+				<div class="item" v-if="billInfo.data.current !== null">
 					<div class="item-l">{{billInfo.data.current.month}}月</div>
 					<div class="item-r"></div>
 				</div>
-				<div class="item">
-					<div class="item-l">租金：{{billInfo.data.current.zu}}</div>
-					<div class="item-r">垃圾费：{{billInfo.data.current.laji}}</div>
+				<div class="item" v-if="billInfo.data.current !== null">
+					<div class="item-l">租金：{{billInfo.data.current.zu | compare}}</div>
+					<div class="item-r">垃圾费：{{billInfo.data.current.laji | compare}}</div>
 				</div>
-				<div class="item">
-					<div class="item-l">管理费：{{billInfo.data.current.guanli}}</div>
-					<div class="item-r">基本电费：{{billInfo.data.current.dianfei}}</div>
+				<div class="item" v-if="billInfo.data.current !== null">
+					<div class="item-l">管理费：{{billInfo.data.current.guanli | compare}}</div>
+					<div class="item-r">基本电费：{{billInfo.data.current.dianfei | compare}}</div>
 				</div>
-        <div class="item">
-					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.current.total}}</span></div>
+        <div class="item" v-if="billInfo.data.current !== null">
+					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.current.total | compare}}</span></div>
 					<div class="item-r">
 						
 					</div>
 				</div>
-				<div class="item">
+				<div class="item" v-if="billInfo.data.current2 !== null">
+					<div class="item-l">{{billInfo.data.current2.month}}月</div>
+					<div class="item-r"></div>
+				</div>
+				<div class="item" v-if="billInfo.data.current2 !== null">
+					<div class="item-l">租金：{{billInfo.data.current2.zu | compare}}</div>
+					<div class="item-r">管理费：{{billInfo.data.current2.guanli | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.current2 !== null">
+					<div class="item-l">垃圾费电梯费：{{billInfo.data.current2.laji | compare}}</div>
+					<div class="item-r">税金：{{billInfo.data.current2.shuijin | compare}}</div>
+				</div>
+        <div class="item" v-if="billInfo.data.current2 !== null">
+					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.current2.total | compare}}</span></div>
+					<div class="item-r">
+						
+					</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev !== null">
 					<div class="item-l">{{billInfo.data.prev.month}}月</div>
 					<div class="item-r"></div>
 				</div>
-				<div class="item">
-					<div class="item-l">电费：{{billInfo.data.prev.dianfei}}</div>
-					<div class="item-r">{{billInfo.data.prev.dian_sunhao_title}}：{{billInfo.data.prev.dian_sunhao}}</div>
+				<div class="item" v-if="billInfo.data.prev !== null">
+					<div class="item-l">电费：{{billInfo.data.prev.dianfei | compare}}</div>
+					<div class="item-r">{{billInfo.data.prev.dian_sunhao_title}}：{{billInfo.data.prev.dian_sunhao | compare}}</div>
 				</div>
-				<div class="item">
-					<div class="item-l">公共用电分摊：{{billInfo.data.prev.dian_fentan}}</div>
-					<div class="item-r">{{billInfo.data.prev.shuifei_title}}：{{billInfo.data.prev.shuifei}}</div>
+				<div class="item" v-if="billInfo.data.prev !== null">
+					<div class="item-l">公共用电分摊：{{billInfo.data.prev.dian_fentan | compare}}</div>
+					<div class="item-r">{{billInfo.data.prev.shuifei_title}}：{{billInfo.data.prev.shuifei | compare}}</div>
 				</div>
-        <div class="item">
-					<div class="item-l">{{billInfo.data.prev.shui_sunhao_title}}：{{billInfo.data.prev.shui_sunhao}}</div>
-					<div class="item-r">公共用水分摊：{{billInfo.data.prev.shui_fentan}}</div>
+        <div class="item" v-if="billInfo.data.prev !== null">
+					<div class="item-l">{{billInfo.data.prev.shui_sunhao_title}}：{{billInfo.data.prev.shui_sunhao | compare}}</div>
+					<div class="item-r">公共用水分摊：{{billInfo.data.prev.shui_fentan | compare}}</div>
 				</div>
-        <!-- <div class="item">
-					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.prev.total}}</span></div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">{{billInfo.data.prev2.month}}月</div>
+					<div class="item-r"></div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">基本电费：{{billInfo.data.prev2.jiben_dianfei | compare}}</div>
+					<div class="item-r">{{billInfo.data.prev2.dian_title}}：{{billInfo.data.prev2.dianfei | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">{{billInfo.data.prev2.dian_sunhao_title}}：{{billInfo.data.prev2.dian_sunhao | compare}}</div>
+					<div class="item-r"></div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">{{billInfo.data.prev2.shuifei_title}}：{{billInfo.data.prev2.shuifei | compare}}</div>
+					<div class="item-r">{{billInfo.data.prev2.shui_sunhao_title}}：{{billInfo.data.prev2.shui_sunhao | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">装修电费：{{billInfo.data.prev2.zhuangxiu_dianfei | compare}}</div>
+					<div class="item-r">装修水费：{{billInfo.data.prev2.zhuangxiu_shuifei | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">分摊电费：{{billInfo.data.prev2.dian_fentan | compare}}</div>
+					<div class="item-r">分摊水费：{{billInfo.data.prev2.shui_fentan | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l">税金：{{billInfo.data.prev2.shuijin | compare}}</div>
+					<div class="item-r">滞纳金：{{billInfo.data.prev2.zhinajin | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.prev2 !== null">
+					<div class="item-l"><span class="font-orange"> 合计：{{billInfo.data.prev2.total | compare}}</span></div>
 					<div class="item-r">
 						
 					</div>
-				</div> -->
-        <div class="item">
+				</div>
+        <div class="item" v-if="billInfo.data.dian !== null">
 					<div class="item-l">本月电表：</div>
 					<div class="item-r">{{billInfo.data.dian.current.feng}}/{{billInfo.data.dian.current.ping}}/{{billInfo.data.dian.current.gu}}</div>
 				</div>
-				<div class="item">
+				<div class="item" v-if="billInfo.data.dian !== null">
 					<div class="item-l">上月电表：</div>
 					<div class="item-r">{{billInfo.data.dian.prev.feng}}/{{billInfo.data.dian.prev.ping}}/{{billInfo.data.dian.prev.gu}}</div>
 				</div>
-        <div class="item">
+        <div class="item" v-if="billInfo.data.dian !== null">
 					<div class="item-l">实际用电：</div>
 					<div class="item-r">{{billInfo.data.dian.shiji.feng}}/{{billInfo.data.dian.shiji.ping}}/{{billInfo.data.dian.shiji.gu}}</div>
 				</div>
-        <div class="item">
-					<div class="item-l">电量负感倍数：{{billInfo.data.dian.beishu}}</div>
-					<div class="item-r">本月用水：{{billInfo.data.shui.current}}</div>
+        <div class="item" v-if="billInfo.data.dian !== null">
+					<div class="item-l">电量负感倍数：{{billInfo.data.dian.beishu | compare}}</div>
+					<div class="item-r">本月用水：{{billInfo.data.shui.current | compare}}</div>
+				</div>
+				<div class="item" v-if="billInfo.data.dian2 !== null">
+					<div class="item-l">本月电表：{{billInfo.data.dian2.current | compare}}</div>
+					<div class="item-r">上月电表：{{billInfo.data.dian2.prev | compare}}</div>
+				</div>
+        <div class="item" v-if="billInfo.data.dian2 !== null">
+					<div class="item-l">实际用电：{{billInfo.data.dian2.shiji | compare}}</div>
+					<div class="item-r">电量负感倍数：{{billInfo.data.dian2.beishu | compare}}</div>
+				</div>
+        <div class="item" v-if="billInfo.data.dian2 !== null">
+					<div class="item-l">本月用水：{{billInfo.data.shui.current | compare}}</div>
+					<div class="item-r"></div>
 				</div>
         <div class="item">
-					<div class="item-l">上月用水：{{billInfo.data.shui.prev}}</div>
-					<div class="item-r">实际用水：{{billInfo.data.shui.shiji}}</div>
+					<div class="item-l">上月用水：{{billInfo.data.shui.prev | compare}}</div>
+					<div class="item-r">实际用水：{{billInfo.data.shui.shiji | compare}}</div>
 				</div>
 				<div class="item">
-					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.amount}}</span></div>
+					<div class="item-l"><span class="font-orange"> 金额合计：{{billInfo.amount | compare}}</span></div>
 					<div class="item-r">
 						
 					</div>
@@ -132,7 +190,7 @@ export default {
   data() {
     return {
       billInfo: {}
-    };
+    }
   },
   computed: {},
   created() {
@@ -150,6 +208,15 @@ export default {
         that.billInfo = res.data
       })
 		}
-  }
+  },
+	filters: {
+		compare(val){
+			if(val === null || val === '' || val === 0){
+				return 0
+			}else{
+				return val
+			}
+		}
+	}
 };
 </script>

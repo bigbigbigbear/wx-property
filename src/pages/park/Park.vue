@@ -6,7 +6,8 @@
         <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
           <div class="section-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
             <div class="item-img">
-              <img :src="item.image" :alt="item.name">
+              <img src="../../assets/images/no-park.png" v-if="item.image === ''">
+              <img :src="item.image" :alt="item.name" v-else>
             </div>
             <div class="item-title text-overflow">
               <h3>{{item.name}}</h3>
@@ -102,6 +103,7 @@ export default {
         that.page += 1
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
+          return false
         }
         that.getParkList()
         that.$refs.loadmore.onBottomLoaded();

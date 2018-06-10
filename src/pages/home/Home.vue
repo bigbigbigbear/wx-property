@@ -24,7 +24,8 @@
       <div class="section-bd section2-bd">
         <div class="section2-item" v-for="(item, index) in parkList" :key="index" @click="goParkDetail(item)">
           <div class="item-img">
-            <img :src="item.image" :alt="item.name">
+            <img src="../../assets/images/no-park.png" v-if="item.image === ''">
+            <img :src="item.image" :alt="item.name" v-else>
           </div>
           <div class="item-title text-overflow">
             <h3>{{item.name}}</h3>

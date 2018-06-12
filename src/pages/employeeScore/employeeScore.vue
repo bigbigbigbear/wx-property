@@ -6,7 +6,8 @@
 			</div>
 			<div class="section-bd">
 				<div class="img-container">
-					<img :src="employeeInfo.image" :alt="employeeInfo.name">
+					<img src="../../assets/images/avatar-2.png" :alt="employeeInfo.name" v-if="employeeInfo.image === ''">
+					<img :src="employeeInfo.image" :alt="employeeInfo.name" v-else>
 				</div>
 				<div class="padding-b20">
 					<p><span class="font-grey">职位介绍：</span>{{employeeInfo.intro}}</p>

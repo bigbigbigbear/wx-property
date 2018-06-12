@@ -8,7 +8,8 @@
       <div class="section-bd section3-bd">
         <div class="section3-item" v-for="(item, index) in employeeList" :key="index" @click="goEmployeeScore(item)">
           <div class="section3-item__l">
-            <img :src="item.image" :alt="item.name">
+            <img src="../../assets/images/avatar-1.png" :alt="item.name" v-if="item.image === ''">
+            <img :src="item.image" :alt="item.name" v-else>
 						<div class="section3-item__name">{{item.name}}</div>
           </div>
           <div class="section3-item__r">

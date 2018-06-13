@@ -21,7 +21,6 @@
         </mt-loadmore>  
       </div>
     </div>
-    <div class="divider"></div>
 	</div>
 </template>
 <style scoped>

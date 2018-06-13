@@ -49,9 +49,9 @@
   border-bottom: 0.0067rem solid #ddd;
 }
 .section-bd {
-	display: flex;
-	flex-wrap: wrap;
+  height: calc(100vh-1.36rem);
   padding: 0 0.2667rem 0.2667rem;
+  overflow: scroll;
 }
 .section-bd__l {
   width: 2.6667rem;
@@ -134,6 +134,7 @@ export default {
         that.page += 1
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
+          return false;
         }
         that.getEmployeeList()
         that.$refs.loadmore.onBottomLoaded();

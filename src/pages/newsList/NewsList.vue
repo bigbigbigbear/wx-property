@@ -43,9 +43,9 @@
   border-bottom: 0.0067rem solid #ddd;
 }
 .section-bd {
-	display: flex;
-	flex-wrap: wrap;
+	height: calc(100vh-1.36rem);
   padding: 0 0.2667rem 0.2667rem;
+  overflow: scroll;
 }
 .section4-item{
   width: 100%;
@@ -102,6 +102,7 @@ export default {
         that.page += 1
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
+          return false;
         }
         that.getNewsList()
         that.$refs.loadmore.onBottomLoaded();

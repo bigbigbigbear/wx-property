@@ -134,7 +134,7 @@ export default {
         if(that.page > that.pageCount){
           that.allLoaded = true;// 若数据已全部获取完毕
         }
-        that.getNewsList()
+        that.getEmployeeList()
         that.$refs.loadmore.onBottomLoaded();
       }, 50)
     },

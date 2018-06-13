@@ -6,17 +6,19 @@
       </div>
       <div class="no-data" v-if="totalCount == 0">-- 暂无数据 --</div>
       <div class="section-bd section3-bd">
-        <div class="section3-item" v-for="(item, index) in employeeList" :key="index" @click="goEmployeeScore(item)">
-          <div class="section3-item__l">
-            <img src="../../assets/images/avatar-1.png" :alt="item.name" v-if="item.image === ''">
-            <img :src="item.image" :alt="item.name" v-else>
-						<div class="section3-item__name">{{item.name}}</div>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :bottom-pull-text="bottomPullText" :bottom-drop-text="bottomDropText" :bottom-loading-text="bottomLoadingText" :auto-fill="false" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <div class="section3-item" v-for="(item, index) in employeeList" :key="index" @click="goEmployeeScore(item)">
+            <div class="section3-item__l">
+              <img src="../../assets/images/avatar-1.png" :alt="item.name" v-if="item.image === ''">
+              <img :src="item.image" :alt="item.name" v-else>
+              <div class="section3-item__name">{{item.name}}</div>
+            </div>
+            <div class="section3-item__r">
+              <h4 class="text-overflow">职位：{{item.job}}</h4>
+              <p class="font-grey"><span>职责：{{item.intro}}</span></p>
+            </div>
           </div>
-          <div class="section3-item__r">
-            <h4 class="text-overflow">职位：{{item.job}}</h4>
-            <p class="font-grey"><span>职责：{{item.intro}}</span></p>
-          </div>
-        </div>
+        </mt-loadmore>  
       </div>
     </div>
     <div class="divider"></div>
@@ -97,7 +99,7 @@ export default {
   data() {
     return {
       page: 1,
-      pageSize: 6,
+      pageSize: 5,
       pageCount: 2,
       totalCount: 0,
       employeeList: [],

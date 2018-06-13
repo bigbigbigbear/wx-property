@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       page: 1,
-      pageSize: 5,
+      pageSize: 6,
       pageCount: 2,
       totalCount: 0,
       employeeList: [],

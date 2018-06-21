@@ -11,7 +11,7 @@
             </div>
             <div class="item-title text-overflow">
               <h3>{{item.name}}</h3>
-              <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
+              <!-- <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name"> -->
             </div>
           </div>
         </mt-loadmore>

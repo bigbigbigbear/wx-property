@@ -19,8 +19,8 @@
 					<div v-html="parkInfo.content">
 					</div>
 					<div class="btn-content">
-						<span class="btn" @click="goParkScore"><img src="../../assets/images/icon-park-1.png" alt="园区评分"> 园区评分</span>
-						<span class="btn" @click="goEmployeeList"><img src="../../assets/images/icon-employee.png" alt="工作人员评分"> 工作人员评分</span>
+						<span class="btn btn-large" @click="goParkScore"><img src="../../assets/images/icon-park-1.png" alt="园区评分"> 园区评分</span>
+						<!-- <span class="btn" @click="goEmployeeList"><img src="../../assets/images/icon-employee.png" alt="工作人员评分"> 工作人员评分</span> -->
 					</div>
 					<div>
 						<span class="btn btn-black btn-large" @click="goFaultRepair"><img src="../../assets/images/icon-repair-1.png" alt="故障报修"> 故障报修</span>

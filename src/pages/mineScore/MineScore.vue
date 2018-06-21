@@ -3,7 +3,7 @@
 		<div class="nav">
 			<mt-navbar class="page-part" v-model="selected" fixed>
 				<mt-tab-item id="1">园区评分</mt-tab-item>
-				<mt-tab-item id="2">工作人员评分</mt-tab-item>
+				<!-- <mt-tab-item id="2">工作人员评分</mt-tab-item> -->
 			</mt-navbar>
 		</div>
 		<mt-tab-container class="tab-container" v-model="selected">

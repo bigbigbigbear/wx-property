@@ -9,7 +9,8 @@
       </div>
       <div class="section-bd">
         <div class="section-bd__l">
-          <img class="img-logo" src="../../assets/images/icon-logo.png" alt="logo">
+          <img v-if="logo === ''" class="img-logo" src="../../assets/images/icon-logo.png" alt="logo">
+          <img class="img-logo" :src="logo" alt="logo" v-else>
         </div>
         <div class="section-bd__r">{{about}}</div>
       </div>
@@ -29,7 +30,7 @@
           </div>
           <div class="item-title text-overflow">
             <h3>{{item.name}}</h3>
-            <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name">
+            <!-- <img class="item-title__search" src="../../assets/images/icon-search.png" :alt="item.name"> -->
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@
             <img :src="item.image" :alt="item.title">
           </div>
           <div class="section3-item__r">
-            <h3 class="text-overflow">{{item.title}}</h3>
+            <h3>{{item.title}}</h3>
             <p class="font-grey"><span>地点：{{item.address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>面积：{{item.area}}</span></p>
             <p class="font-grey"><span>租金：{{item.rent}}</span></p>
             <p><a href="javascript:;" class="font-orange" @click="goRentDetail(item)">查看详情 <img class="item-img__search" src="../../assets/images/icon-search-active.png" alt="查看详情"></a></p>
@@ -209,6 +210,7 @@ export default {
       userInfo: {},
       selected: 'home',
       about: {},
+      logo: '',
       parkPage: 1,
       parkSize: 4,
       parkTotal: 0,
@@ -256,6 +258,7 @@ export default {
       let that = this
       let params = {}
       this.$http.get(api.index,{params: params}).then(res => {
+        that.logo = res.data.logo
         that.about = res.data.about
         that.contact = res.data.contact
       })

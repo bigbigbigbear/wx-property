@@ -10,16 +10,17 @@
 					<label>园区环境&nbsp;&nbsp;&nbsp;&nbsp;<star-score :prop-score="envScore" @getScore="getEnvScore"></star-score>
 					</label>
 				</div>
-				<div class="item">
+				<!-- <div class="item">
 					<label>园区设施&nbsp;&nbsp;&nbsp;&nbsp;<star-score :prop-score="deviceScore" @getScore="getDeviceScore"></star-score>
 					</label>
-				</div>
+				</div> -->
 				<div class="item">
 					<label>园区服务&nbsp;&nbsp;&nbsp;&nbsp;<star-score :prop-score="serviceScore" @getScore="getServiceScore"></star-score>
 					</label>
 				</div>
 				<div class="item-btn">
-					<span class="btn btn-large btn-radius" @click="submitScore">提交评分</span>
+					<span class="btn btn-large btn-radius" @click="submitScore">提交园区评分</span>
+					<span class="btn btn-large btn-radius" @click="goEmployeeList">工作人员评分</span>
 				</div>
 			</div>
 		</div>
@@ -76,7 +77,7 @@ export default {
     return {
 			averScore: 0,
 			envScore: 0,
-			deviceScore: 0,
+			// deviceScore: 0,
 			serviceScore: 0,
     };
   },
@@ -108,8 +109,8 @@ export default {
 				park_id: pid,
 				user_id: user_id,
 				surroundings: this.envScore,
-				service: this.serviceScore,
-				facilities: this.deviceScore
+				service: this.serviceScore
+				// facilities: this.deviceScore
 			}
       this.$http.post(api.parkScore, params).then(res => {
 				if(res.err_code === 0){
@@ -134,14 +135,24 @@ export default {
 			this.envScore = data
 		},
 		// 获取设备评分
-		getDeviceScore: function(data){
-			// console.log(data)
-			this.deviceScore = data
-		},
+		// getDeviceScore: function(data){
+		// 	// console.log(data)
+		// 	this.deviceScore = data
+		// },
 		// 获取服务评分
 		getServiceScore: function(data){
 			// console.log(data)
 			this.serviceScore = data
+		},
+		//工作人员列表页面
+		goEmployeeList: function(){
+			let pid = this.$route.params.pid
+			this.$router.push({
+				name: 'employeeList',
+				params: {
+					pid: pid
+				}
+			})
 		}
 	}
 };

@@ -145,7 +145,9 @@ export default {
       ],
       type: '',
       startTime: null,
+      startAt: null,
       endTime: null,
+      endAt: null,
       value: null,
       purpose: ""
     };
@@ -188,9 +190,11 @@ export default {
     handleChange(value) {
       let date = formateDate(value, 'yyyy-MM-dd HH:mm')
       if(this.type == 'start'){
+        this.startAt = Math.floor(new Date(value).getTime() / 1000)
         this.startTime = date
       }
 			if(this.type == 'end'){
+        this.endAt = Math.floor(new Date(value).getTime() / 1000)
         this.endTime = date
       }
     },
@@ -209,7 +213,8 @@ export default {
         name: this.bookName,
         contact: this.contact,
         people_number: this.peopleNumber,
-        date: this.startTime + ' 至 ' + this.endTime,
+        start_at: this.startAt,
+        end_at: this.endAt,
 				purpose: this.purpose
 			}
 			if(this.bookName == ''){
@@ -224,6 +229,14 @@ export default {
 				Toast('预约人数不能为空~')
 				return false
       }
+      if(this.startAt === null){
+				Toast('请选择开始时间~')
+				return false
+      }
+      if(this.endAt === null){
+				Toast('请选择结束时间~')
+				return false
+      }
       if(this.purpose == ''){
 				Toast('用途不能为空~')
 				return false
@@ -236,6 +249,13 @@ export default {
           this.bookName = ''
           this.contact = ''
           this.peopleNumber = ''
+          // 去往园区详情页面
+          this.$router.push({
+            name: "parkDetail",
+            params: {
+              pid: pid
+            }
+          })
         }
       })
     }

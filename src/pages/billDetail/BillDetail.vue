@@ -6,12 +6,8 @@
 			</div>
 			<div class="section-bd">
 				<div class="item">
-					<div class="item-l">序号：{{billInfo.data.xu_hao}}</div>
-					<div class="item-r"></div>
-				</div>
-				<div class="item">
 					<div class="item-l">客户名称：{{billInfo.data.ke_hu_ming_cheng}}</div>
-					<div class="item-r">客户ID：{{billInfo.data.ke_hu_ID}}</div>
+					<div class="item-r"></div>
 				</div>
 				<div class="item">
 					<div class="item-l">租金月份：{{billInfo.data.zu_jin_yue_fen}}月</div>

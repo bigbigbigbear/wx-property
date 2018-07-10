@@ -77,7 +77,7 @@ new Vue({
         .then(function (res) {
           localStorage.setItem('renter',res.data.renter)
 					localStorage.setItem('user_token',res.data.user_token)
-					localStorage.setItem('user_id',res.data.user_id)
+          localStorage.setItem('user_id',res.data.user_id)
           var data = (res && res.data) || {}
           return data
         })

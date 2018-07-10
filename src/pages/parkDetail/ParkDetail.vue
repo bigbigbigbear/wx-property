@@ -18,11 +18,11 @@
 				<div class="section-content">
 					<div v-html="parkInfo.content">
 					</div>
-					<div class="btn-content">
+					<div class="btn-content" v-show="showBtn">
 						<span class="btn btn-large" @click="goParkScore"><img src="../../assets/images/icon-park-1.png" alt="园区评分"> 园区评分</span>
 						<!-- <span class="btn" @click="goEmployeeList"><img src="../../assets/images/icon-employee.png" alt="工作人员评分"> 工作人员评分</span> -->
 					</div>
-					<div>
+					<div v-show="showBtn">
 						<span class="btn btn-black btn-large" @click="goFaultRepair"><img src="../../assets/images/icon-repair-1.png" alt="故障报修"> 故障报修</span>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 				<div class="section-content">
 					<div class="item" v-for="(item, index) in deviceList" :key="index">
 						<span>{{item.name}}</span>
-						<span class="btn btn-mini" @click="goDeviceBook(item)"><img src="../../assets/images/icon-book-1.png" alt="预约"> 预约</span>
+						<span class="btn btn-mini" @click="goDeviceBook(item)" v-show="showBtn"><img src="../../assets/images/icon-book-1.png" alt="预约"> 预约</span>
 					</div>
 				</div>
 			</div>
@@ -120,11 +120,15 @@ export default {
 	},
 	data() {
 		return {
+			showBtn: false,
 			parkInfo: {},
 			deviceList: []
 		}
 	},
 	created() {
+		let pid = this.$route.params.pid
+		let _pid = localStorage.getItem('park_id')
+		this.showBtn = pid === _pid ? true : false
 		this.getParkInfo()
 		this.getDeviceList()
 	},

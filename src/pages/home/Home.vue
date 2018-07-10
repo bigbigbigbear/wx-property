@@ -251,6 +251,7 @@ export default {
         }
         // 1是业主 0是普通用户
         localStorage.setItem('renter',res.data.renter)
+        localStorage.setItem('park_id',res.data.park_id)
       })
     },
     //获取首页信息

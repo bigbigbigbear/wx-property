@@ -127,8 +127,6 @@ export default {
 	},
 	created() {
 		let pid = this.$route.params.pid
-		let _pid = localStorage.getItem('park_id')
-		this.showBtn = pid === _pid ? true : false
 		this.getParkInfo()
 		this.getDeviceList()
 	},
@@ -144,7 +142,9 @@ export default {
         park_id: pid
       }
       this.$http.get(api.parkDetail,{params: params}).then(res => {
-        that.parkInfo = res.data
+				that.parkInfo = res.data
+				let _pid = localStorage.getItem('park_id')
+				that.showBtn = pid == _pid ? true : false
       })
 		},
 		//获取设施列表
